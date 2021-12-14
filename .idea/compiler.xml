@@ -10,7 +10,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="codecademy" target="16" />
       <module name="Codecademy" target="16" />
     </bytecodeTargetLevel>
   </component>
