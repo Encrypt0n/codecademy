@@ -21,4 +21,8 @@ public class Home extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void switchScene(){
+        System.out.println("Hallo!");
+    }
 }
