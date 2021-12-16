@@ -7,4 +7,6 @@ module com.omega13.codecademy {
 
     opens com.omega13.codecademy to javafx.fxml;
     exports com.omega13.codecademy;
+    exports com.omega13.codecademy.controllers;
+    opens com.omega13.codecademy.controllers to javafx.fxml;
 }

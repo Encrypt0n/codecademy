@@ -1,4 +1,4 @@
-package com.omega13.codecademy;
+package com.omega13.codecademy.controllers;
 
 
 import com.omega13.codecademy.database.CourseMemberData;
@@ -10,18 +10,26 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.w3c.dom.events.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserController implements Initializable {
+    //TABLE DATA
+    @FXML
+    TableView<CourseMember> CourseMember;
+
     @FXML
     TableColumn<CourseMember, String> Name;
     @FXML
@@ -37,8 +45,20 @@ public class UserController implements Initializable {
     @FXML
     TableColumn<CourseMember, String> Country;
 
+    //NEW TABLE DATA
     @FXML
-    TableView<CourseMember> CourseMember;
+    TextField newName;
+    @FXML
+    TextField newAddress;
+    @FXML
+    TextField newCountry;
+    @FXML
+    TextField newEmail;
+    @FXML
+    TextField newCity;
+    @FXML
+    DatePicker newBirthday;
+
 
 
     @Override
@@ -54,15 +74,15 @@ public class UserController implements Initializable {
         CourseMember.getItems().setAll(CourseMemberdata.getUsers());
     }
 
-  /*  private List<Cursist> cursists(){
-        ArrayList<Cursist> list = new ArrayList<>();
-        list.add(new Cursist("Bert"));
-        return list;
-    }*/
-
     @FXML
     public void addUser(ActionEvent e){
-      //  tvCursist.getItems().add(new Cursist("Bert"));
-
+        System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
     }
+
+    @FXML
+    public void click(MouseEvent e){
+        System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
+    }
+
+
 }
