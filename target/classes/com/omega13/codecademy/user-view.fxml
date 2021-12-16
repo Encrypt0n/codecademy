@@ -9,6 +9,9 @@
 <?import javafx.scene.text.Font?>
 
 
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.HBox?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.omega13.codecademy.UserController">
    <children>
       <BorderPane layoutX="-2.0" layoutY="-1.0" prefHeight="400.0" prefWidth="652.0">
@@ -20,19 +23,22 @@
             </Label>
          </top>
          <center>
-            <TableView fx:id="tvCursist" prefHeight="310.0" prefWidth="652.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="CourseMember" prefHeight="310.0" prefWidth="652.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="tcName" prefWidth="75.0" text="Naam" />
-                <TableColumn prefWidth="75.0" text="Email" />
-                  <TableColumn prefWidth="75.0" text="Geboortedatum" />
-                  <TableColumn prefWidth="75.0" text="Geslacht" />
-                  <TableColumn prefWidth="75.0" text="Adres" />
-                  <TableColumn prefWidth="75.0" text="Woonplaats" />
-                  <TableColumn prefWidth="75.0" text="Land" />
+                <TableColumn fx:id="Name" prefWidth="75.0" text="Naam" />
+                <TableColumn fx:id="Email" prefWidth="75.0" text="Email" />
+                  <TableColumn fx:id="Birthday" prefWidth="75.0" text="Geboortedatum" />
+                  <TableColumn fx:id="Gender" prefWidth="75.0" text="Geslacht" />
+                  <TableColumn fx:id="Address" prefWidth="75.0" text="Adres" />
+                  <TableColumn fx:id="City" prefWidth="75.0" text="Woonplaats" />
+                  <TableColumn fx:id="Country" prefWidth="75.0" text="Land" />
               </columns>
             </TableView>
+
          </center>
+
          <bottom>
+
             <Button mnemonicParsing="false" onAction="#addUser" text="Add user" BorderPane.alignment="CENTER" />
          </bottom>
       </BorderPane>
