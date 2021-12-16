@@ -1,8 +1,5 @@
 package com.omega13.codecademy.domain;
 
-import java.sql.*;
-import java.util.Calendar;
-
 public class CourseMember {
     private String name;
     private String email;
@@ -11,9 +8,11 @@ public class CourseMember {
     private  String address;
     private String city;
     private String country;
+    private int id;
 
 
-    public CourseMember(String name, String email, java.sql.Date birthday, boolean gender, String address, String city, String country) {
+    public CourseMember(int id, String name, String email, java.sql.Date birthday, boolean gender, String address, String city, String country) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.birthday = birthday;
@@ -23,6 +22,9 @@ public class CourseMember {
         this.country = country;
     }
 
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -32,7 +34,7 @@ public class CourseMember {
         return email;
     }
 
-    public Date getBirthday() {
+    public java.sql.Date getBirthday() {
         return birthday;
     }
 
