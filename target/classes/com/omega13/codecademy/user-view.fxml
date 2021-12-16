@@ -9,10 +9,14 @@
 <?import javafx.scene.text.Font?>
 
 
+<<<<<<< Updated upstream
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.HBox?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.omega13.codecademy.UserController">
+=======
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.omega13.codecademy.controllers.UserController">
+>>>>>>> Stashed changes
    <children>
       <BorderPane layoutX="-2.0" layoutY="-1.0" prefHeight="400.0" prefWidth="652.0">
          <top>
