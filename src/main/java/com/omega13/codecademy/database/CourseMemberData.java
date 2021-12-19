@@ -100,13 +100,7 @@ public class CourseMemberData {
         } catch (SQLException e) {
             throw new Error("Problem", e);
         } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+
         }
 
     }
@@ -131,13 +125,7 @@ public class CourseMemberData {
         } catch (SQLException e) {
             throw new Error("Problem", e);
         } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+
         }
 
     }
@@ -169,13 +157,7 @@ public class CourseMemberData {
         } catch (SQLException e) {
             throw new Error("Problem", e);
         } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+
         }
 
     }

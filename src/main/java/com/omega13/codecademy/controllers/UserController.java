@@ -56,6 +56,15 @@ public class UserController implements Initializable {
     TextField newCity;
     @FXML
     DatePicker newBirthday;
+    @FXML
+    RadioButton Male;
+    @FXML
+    RadioButton Female;
+    @FXML
+    ToggleGroup genderGroup = new ToggleGroup();
+
+    boolean gender;
+    int id;
 
     public CourseMemberData memberData = new CourseMemberData();
 
@@ -71,72 +80,59 @@ public class UserController implements Initializable {
 
         CourseMembers.getItems().setAll(memberData.getUsers());
 
+        CourseMembers.getSelectionModel().selectedIndexProperty().addListener((num) -> setMemberData());
 
+        Male.setToggleGroup(genderGroup);
+        Female.setToggleGroup(genderGroup);
+        genderGroup.selectedToggleProperty().addListener(
+                (observable, oldToggle, newToggle) -> {
+                    if (newToggle == Male) {
+                        gender = true;
+                    } else if (newToggle == Female) {
+                        gender = false;
 
-        CourseMembers.getSelectionModel().selectedIndexProperty().addListener((num) -> printcell());
-
-        /*CourseMember.setRowFactory(tv -> {
-            TableRow<CourseMember> row = new TableRow<>();
-            TableCell<CourseMember, String> cell = new TableCell<>();
-            row.setOnMouseClicked(event -> {
-                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
-                        && event.getClickCount() == 1) {
-
-                    CourseMember clickedRow = row.getItem();
-                    System.out.println(clickedRow);
+                    }
                 }
-            });
-            cell.setOnMouseClicked(event -> {
-                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
-                        && event.getClickCount() == 1) {
+        );
 
-                    CourseMember clickedRow = cell;
-                    System.out.println(clickedRow);
-                }
-            });
-            return row ;
-        });*/
     }
 
-    int id;
 
     @FXML
-    public void printcell() {
-        CourseMember object =  CourseMembers.getSelectionModel().selectedItemProperty().get();
-        //int index = CourseMember.getSelectionModel().selectedIndexProperty().get();
+    public void setMemberData() {
+        if(CourseMembers.isPressed()) {
+            CourseMember object = CourseMembers.getSelectionModel().selectedItemProperty().get();
+            id = object.getId();
 
-        id = object.getId();
+            newName.setText(object.getName());
+            newEmail.setText(object.getEmail());
+            newBirthday.setValue(object.getBirthday().toLocalDate());
+            newAddress.setText(object.getAddress());
+            newCity.setText(object.getCity());
+            newCountry.setText(object.getCountry());
 
-        newName.setText(object.getName());
-        newEmail.setText(object.getEmail());
-        newBirthday.setValue(object.getBirthday().toLocalDate());
-        newAddress.setText(object.getAddress());
-        newCity.setText(object.getCity());
-        newCountry.setText(object.getCountry());
-
-        System.out.println(object.getName());
-        System.out.println(object.getId());
+        }
     }
 
     @FXML
     public void addUser(ActionEvent e){
-        //System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
-        memberData.addCourseMember(newName.getText(), newEmail.getText(), Date.valueOf(newBirthday.getValue()), true, newAddress.getText(), newCity.getText(), newCountry.getText());
-        CourseMembers.refresh();
+
+        memberData.addCourseMember(newName.getText(), newEmail.getText(), Date.valueOf(newBirthday.getValue()), gender, newAddress.getText(), newCity.getText(), newCountry.getText());
+        CourseMembers.getItems().setAll(memberData.getUsers());
     }
 
     @FXML
     public void deleteUser(ActionEvent e){
-        //System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
+
         memberData.deleteCourseMember(id);
-        CourseMembers.refresh();
+        CourseMembers.getItems().setAll(memberData.getUsers());
     }
 
     @FXML
     public void updateUser(ActionEvent e){
-        //System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
-        memberData.updateCourseMember(id, newName.getText(), newEmail.getText(), java.sql.Date.valueOf(newBirthday.getValue()), true, newAddress.getText(), newCity.getText(), newCountry.getText());
-        CourseMembers.refresh();
+
+        memberData.updateCourseMember(id, newName.getText(), newEmail.getText(), java.sql.Date.valueOf(newBirthday.getValue()), gender, newAddress.getText(), newCity.getText(), newCountry.getText());
+        CourseMembers.getItems().setAll(memberData.getUsers());
     }
 
 
