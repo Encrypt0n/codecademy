@@ -21,6 +21,7 @@ public class CourseMemberData {
 
     public List<CourseMember> getUsers() {
         ArrayList<CourseMember> courseMembers = new ArrayList<>();
+        int id;
         String name;
         String email;
         java.sql.Date birthday;
@@ -49,6 +50,7 @@ public class CourseMemberData {
 
 
             while (rs.next()) {               // Position the cursor                  4
+                id = rs.getInt(1);
                 name = rs.getString(2);        // Retrieve the first column value
                 email = rs.getString(3);// Retrieve the first column value
                 birthday = rs.getDate(4);
@@ -57,7 +59,7 @@ public class CourseMemberData {
                 city = rs.getString(7);
                 country = rs.getString(8);
 
-                courseMembers.add(new CourseMember(name, email, birthday, gender, address, city, country));
+                courseMembers.add(new CourseMember(id, name, email, birthday, gender, address, city, country));
             }
 
             rs.close();
@@ -67,13 +69,7 @@ public class CourseMemberData {
         } catch (SQLException e) {
             throw new Error("Problem", e);
         } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+
         }
 
 
@@ -99,17 +95,69 @@ public class CourseMemberData {
 
             // execute the preparedstatement
             preparedStmt.execute();
+            System.out.println("gelukt");
 
         } catch (SQLException e) {
             throw new Error("Problem", e);
         } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+
+        }
+
+    }
+
+
+    public void deleteCourseMember(int id) {
+
+        try {
+            String query = " delete from Cursist WHERE ID =?";
+
+
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt (1, id);
+
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+            System.out.println("gelukt");
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+
+    }
+
+    public void updateCourseMember(int id, String name, String email, java.sql.Date birthday, boolean gender, String address, String city, String country) {
+
+        try {
+            String query = " update Cursist set Naam =?, Email =?, Geboortedatum =?, Geslacht =?, Adres =?, Woonplaats =?, Land =? WHERE ID =?";
+
+
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+            preparedStmt.setString (1, name);
+            preparedStmt.setString (2, email);
+            preparedStmt.setDate(3, birthday);
+            preparedStmt.setBoolean (4, gender);
+            preparedStmt.setString (5, address);
+            preparedStmt.setString (6, city);
+            preparedStmt.setString (7, country);
+            preparedStmt.setInt (8, id);
+
+
+            // execute the preparedstatement
+            preparedStmt.executeUpdate();
+            System.out.println("gelukt");
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
         }
 
     }

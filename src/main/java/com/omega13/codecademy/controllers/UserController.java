@@ -10,11 +10,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.w3c.dom.events.MouseEvent;
 
@@ -28,7 +26,7 @@ import java.util.ResourceBundle;
 public class UserController implements Initializable {
     //TABLE DATA
     @FXML
-    TableView<CourseMember> CourseMember;
+    TableView<CourseMember> CourseMembers;
 
     @FXML
     TableColumn<CourseMember, String> Name;
@@ -58,8 +56,17 @@ public class UserController implements Initializable {
     TextField newCity;
     @FXML
     DatePicker newBirthday;
+    @FXML
+    RadioButton Male;
+    @FXML
+    RadioButton Female;
+    @FXML
+    ToggleGroup genderGroup = new ToggleGroup();
 
+    boolean gender;
+    int id;
 
+    public CourseMemberData memberData = new CourseMemberData();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,19 +77,65 @@ public class UserController implements Initializable {
         Address.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAddress()));
         City.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCity()));
         Country.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCountry()));
-        CourseMemberData CourseMemberdata = new CourseMemberData();
-        CourseMember.getItems().setAll(CourseMemberdata.getUsers());
+
+        CourseMembers.getItems().setAll(memberData.getUsers());
+
+        CourseMembers.getSelectionModel().selectedIndexProperty().addListener((num) -> setMemberData());
+
+        Male.setToggleGroup(genderGroup);
+        Female.setToggleGroup(genderGroup);
+        genderGroup.selectedToggleProperty().addListener(
+                (observable, oldToggle, newToggle) -> {
+                    if (newToggle == Male) {
+                        gender = true;
+                    } else if (newToggle == Female) {
+                        gender = false;
+
+                    }
+                }
+        );
+
+    }
+
+
+    @FXML
+    public void setMemberData() {
+        if(CourseMembers.isPressed()) {
+            CourseMember object = CourseMembers.getSelectionModel().selectedItemProperty().get();
+            id = object.getId();
+
+            newName.setText(object.getName());
+            newEmail.setText(object.getEmail());
+            newBirthday.setValue(object.getBirthday().toLocalDate());
+            newAddress.setText(object.getAddress());
+            newCity.setText(object.getCity());
+            newCountry.setText(object.getCountry());
+
+        }
     }
 
     @FXML
     public void addUser(ActionEvent e){
-        System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
+
+        memberData.addCourseMember(newName.getText(), newEmail.getText(), Date.valueOf(newBirthday.getValue()), gender, newAddress.getText(), newCity.getText(), newCountry.getText());
+        CourseMembers.getItems().setAll(memberData.getUsers());
     }
 
     @FXML
-    public void click(MouseEvent e){
-        System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
+    public void deleteUser(ActionEvent e){
+
+        memberData.deleteCourseMember(id);
+        CourseMembers.getItems().setAll(memberData.getUsers());
     }
+
+    @FXML
+    public void updateUser(ActionEvent e){
+
+        memberData.updateCourseMember(id, newName.getText(), newEmail.getText(), java.sql.Date.valueOf(newBirthday.getValue()), gender, newAddress.getText(), newCity.getText(), newCountry.getText());
+        CourseMembers.getItems().setAll(memberData.getUsers());
+    }
+
+
 
 
 }
