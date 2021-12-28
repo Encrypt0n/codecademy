@@ -3,27 +3,17 @@ package com.omega13.codecademy.controllers;
 
 import com.omega13.codecademy.database.CourseMemberData;
 import com.omega13.codecademy.domain.CourseMember;
-import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
-import javafx.stage.Stage;
-import org.w3c.dom.events.MouseEvent;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class UserController implements Initializable {
+public class CourseMemberController implements Initializable {
     //TABLE DATA
     @FXML
     TableView<CourseMember> CourseMembers;
@@ -69,7 +59,7 @@ public class UserController implements Initializable {
         City.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCity()));
         Country.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCountry()));
 
-        CourseMembers.getItems().setAll(memberData.getUsers());
+        CourseMembers.getItems().setAll(memberData.getCourseMembers());
 
 
 
@@ -119,21 +109,21 @@ public class UserController implements Initializable {
     }
 
     @FXML
-    public void addUser(ActionEvent e){
+    public void addCourseMember(ActionEvent e){
         //System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
         memberData.addCourseMember(newName.getText(), newEmail.getText(), Date.valueOf(newBirthday.getValue()), true, newAddress.getText(), newCity.getText(), newCountry.getText());
         CourseMembers.refresh();
     }
 
     @FXML
-    public void deleteUser(ActionEvent e){
+    public void deleteCourseMember(ActionEvent e){
         //System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
         memberData.deleteCourseMember(id);
         CourseMembers.refresh();
     }
 
     @FXML
-    public void updateUser(ActionEvent e){
+    public void updateCourseMember(ActionEvent e){
         //System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
         memberData.updateCourseMember(id, newName.getText(), newEmail.getText(), java.sql.Date.valueOf(newBirthday.getValue()), true, newAddress.getText(), newCity.getText(), newCountry.getText());
         CourseMembers.refresh();
