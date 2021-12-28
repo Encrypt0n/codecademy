@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.omega13.codecademy.controllers.UserController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.omega13.codecademy.controllers.CourseMemberController">
    <children>
       <BorderPane layoutX="-2.0" layoutY="-1.0" prefHeight="408.0" prefWidth="652.0">
          <center>
@@ -33,7 +33,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
       
-                        <Button alignment="TOP_RIGHT" layoutX="292.0" layoutY="152.0" mnemonicParsing="false" onAction="#addUser" text="Add user" />
+                        <Button alignment="TOP_RIGHT" layoutX="292.0" layoutY="152.0" mnemonicParsing="false" onAction="#addCourseMember" text="Add user" />
                   <TextField fx:id="newName" layoutX="71.0" layoutY="25.0" promptText="Naam" />
                   <TextField fx:id="newEmail" layoutX="71.0" layoutY="75.0" promptText="Email" />
                   <TextField fx:id="newAddress" layoutX="252.0" layoutY="25.0" promptText="Adres" />
@@ -42,8 +42,8 @@
                   <DatePicker fx:id="newBirthday" layoutX="420.0" layoutY="75.0" />
                   <RadioButton fx:id="Male" layoutX="220.0" layoutY="122.0" mnemonicParsing="false" text="Man" />
                   <RadioButton fx:id="Female" layoutX="366.0" layoutY="122.0" mnemonicParsing="false" text="Vrouw" />
-                  <Button alignment="TOP_RIGHT" layoutX="179.0" layoutY="152.0" mnemonicParsing="false" onAction="#updateUser" text="Update user" />
-                  <Button alignment="TOP_RIGHT" layoutX="392.0" layoutY="152.0" mnemonicParsing="false" onAction="#deleteUser" text="Delete user" />
+                  <Button alignment="TOP_RIGHT" layoutX="179.0" layoutY="152.0" mnemonicParsing="false" onAction="#updateCourseMember" text="Update user" />
+                  <Button alignment="TOP_RIGHT" layoutX="392.0" layoutY="152.0" mnemonicParsing="false" onAction="#deleteCourseMember" text="Delete user" />
                </children>
             </Pane>
          </bottom>

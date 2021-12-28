@@ -19,7 +19,7 @@ public class HomeController {
 
     @FXML
     private void onUserButtonClick(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Home.class.getResource("user-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(Home.class.getResource("coursemember-view.fxml"));
         Stage stage = (Stage) btn_user.getScene().getWindow();
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);

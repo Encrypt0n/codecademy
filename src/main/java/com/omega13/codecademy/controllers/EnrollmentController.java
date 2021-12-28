@@ -39,7 +39,7 @@ public class EnrollmentController {
 
     private void fillCourseMembers(){
         ArrayList<MenuItem> items = new ArrayList<>();
-        for (CourseMember courseMember : this.courseMemberData.getUsers()) {
+        for (CourseMember courseMember : this.courseMemberData.getCourseMembers()) {
             MenuItem newItem = new MenuItem(courseMember.getName());
             items.add(newItem);
 

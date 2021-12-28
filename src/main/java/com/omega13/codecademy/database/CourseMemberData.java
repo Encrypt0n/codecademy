@@ -19,7 +19,7 @@ public class CourseMemberData {
 
     Connection conn = connection.makeConnection();
 
-    public List<CourseMember> getUsers() {
+    public List<CourseMember> getCourseMembers() {
         ArrayList<CourseMember> courseMembers = new ArrayList<>();
         int id;
         String name;
