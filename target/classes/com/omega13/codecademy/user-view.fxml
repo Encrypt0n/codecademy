@@ -47,8 +47,8 @@
                   <TextField fx:id="newCity" layoutX="251.0" layoutY="75.0" promptText="Woonplaats" />
                   <TextField fx:id="newCountry" layoutX="432.0" layoutY="25.0" promptText="Land" />
                   <DatePicker fx:id="newBirthday" layoutX="420.0" layoutY="75.0" />
-                  <RadioButton layoutX="220.0" layoutY="122.0" mnemonicParsing="false" text="Man" />
-                  <RadioButton layoutX="366.0" layoutY="122.0" mnemonicParsing="false" text="Vrouw" />
+                  <RadioButton fx:id="Male" layoutX="220.0" layoutY="122.0" mnemonicParsing="false" text="Man" />
+                  <RadioButton fx:id="Female" layoutX="366.0" layoutY="122.0" mnemonicParsing="false" text="Vrouw" />
                   <Button alignment="TOP_RIGHT" layoutX="179.0" layoutY="152.0" mnemonicParsing="false" onAction="#updateUser" text="Update user" />
                   <Button alignment="TOP_RIGHT" layoutX="392.0" layoutY="152.0" mnemonicParsing="false" onAction="#deleteUser" text="Delete user" />
                </children>
