@@ -27,6 +27,7 @@
                   </Button>
                </children>
             </HBox>
+            <Button fx:id="btn_enrollment" mnemonicParsing="false" onAction="#onEnrollmentClick" text="Inschrijving" />
          </children>
       </VBox>
    </children>
