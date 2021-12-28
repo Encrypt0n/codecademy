@@ -1,6 +1,7 @@
 package com.omega13.codecademy.controllers;
 
 
+import com.omega13.codecademy.Home;
 import com.omega13.codecademy.database.CourseMemberData;
 import com.omega13.codecademy.domain.CourseMember;
 import javafx.application.Application;
@@ -62,6 +63,9 @@ public class UserController implements Initializable {
     RadioButton Female;
     @FXML
     ToggleGroup genderGroup = new ToggleGroup();
+
+    @FXML
+    Button btn_return;
 
     boolean gender;
     int id;
@@ -133,6 +137,14 @@ public class UserController implements Initializable {
 
         memberData.updateCourseMember(id, newName.getText(), newEmail.getText(), java.sql.Date.valueOf(newBirthday.getValue()), gender, newAddress.getText(), newCity.getText(), newCountry.getText());
         CourseMembers.getItems().setAll(memberData.getUsers());
+    }
+
+    @FXML
+    public void returnHome(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Home.class.getResource("home-view.fxml"));
+        Stage stage = (Stage) btn_return.getScene().getWindow();
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
     }
 
 
