@@ -20,7 +20,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Button fx:id="btn_user" mnemonicParsing="false" onAction="#onUserButtonClick" text="Users" />
-                  <Button mnemonicParsing="false" text="Cursus">
+                  <Button fx:id="btn_course" mnemonicParsing="false" text="Cursus" onAction="#onCourseClick">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
