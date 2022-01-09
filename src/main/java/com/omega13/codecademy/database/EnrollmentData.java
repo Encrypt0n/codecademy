@@ -1,9 +1,15 @@
 package com.omega13.codecademy.database;
 
+import com.omega13.codecademy.domain.CourseMember;
+import com.omega13.codecademy.domain.Enrollment;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class EnrollmentData {
     DatabaseConnection connection = new DatabaseConnection();
@@ -34,13 +40,72 @@ public class EnrollmentData {
         } catch (SQLException e) {
             throw new Error("Problem", e);
         } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
         }
     }
+
+    public List<Enrollment> getEnrollments() {
+        ArrayList<Enrollment> enrollments = new ArrayList<>();
+        int id;
+        java.sql.Date registrationDate;
+        int courseMemberId;
+        int certificateId;
+        int courseId;
+        ResultSet rs;
+        try {
+            String query = " select * from Inschrijving";
+
+
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+            rs = preparedStmt.executeQuery();
+
+
+            while (rs.next()) {               // Position the cursor                  4
+                id = rs.getInt(1);
+                registrationDate = rs.getDate(2);        // Retrieve the first column value
+                courseMemberId = rs.getInt(3);// Retrieve the first column value
+                certificateId = rs.getInt(4);
+                courseId = rs.getInt(5);
+
+                enrollments.add(new Enrollment(id, registrationDate, courseMemberId, certificateId, courseId));
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return enrollments;
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+
+
+    }
+
+    public void deleteEnrollment(int id) {
+
+        try {
+            String query = " delete from Inschrijving WHERE ID =?";
+
+
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt (1, id);
+
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+            System.out.println("gelukt");
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+
+    }
+
 }

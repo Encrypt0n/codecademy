@@ -1,6 +1,7 @@
 package com.omega13.codecademy.database;
 
 import com.omega13.codecademy.domain.Course;
+import com.omega13.codecademy.domain.CourseMember;
 import com.omega13.codecademy.domain.Enums.Level;
 
 import java.sql.Connection;
@@ -69,8 +70,45 @@ public class CourseData {
         } finally {
 
         }
+    }
+
+    public Course getCourse(int courseId){
+        Course course = new Course();
+        int id;
+        String title;
+        String subject;
+        String introtext;
+        Level level;
+        String interesting;
+        ResultSet rs;
+
+        try {
+            String query = " select * from Cursus WHERE id = " + courseId;
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+            // execute the preparedstatement
+            rs = preparedStmt.executeQuery();
 
 
+            while (rs.next()) {               // Position the cursor                  4
+                id = rs.getInt(1);
+                title = rs.getString(2);        // Retrieve the first column value
+                subject = rs.getString(3);// Retrieve the first column value
+                introtext = rs.getString(4);
+                level = Level.valueOf(rs.getString(5));
 
+                course = new Course(id, title, subject, introtext, level);
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return course;
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
     }
 }

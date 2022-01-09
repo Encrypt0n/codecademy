@@ -75,6 +75,51 @@ public class CourseMemberData {
 
     }
 
+    public CourseMember getCourseMember(int courseMemberId){
+        CourseMember member = new CourseMember();
+        int id;
+        String name;
+        String email;
+        java.sql.Date birthday;
+        boolean gender;
+        String address;
+        String city;
+        String country;
+        ResultSet rs;
+
+        try {
+            String query = " select * from Cursist WHERE id = " + courseMemberId;
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+            // execute the preparedstatement
+            rs = preparedStmt.executeQuery();
+
+
+            while (rs.next()) {               // Position the cursor                  4
+                id = rs.getInt(1);
+                name = rs.getString(2);        // Retrieve the first column value
+                email = rs.getString(3);// Retrieve the first column value
+                birthday = rs.getDate(4);
+                gender = rs.getBoolean(5);
+                address = rs.getString(6);
+                city = rs.getString(7);
+                country = rs.getString(8);
+
+                member = new CourseMember(id, name, email, birthday, gender, address, city, country);
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return member;
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+    }
+
     public void addCourseMember(String name, String email, java.sql.Date birthday, boolean gender, String address, String city, String country) {
 
         try {

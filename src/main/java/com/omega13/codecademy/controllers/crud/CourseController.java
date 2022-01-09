@@ -1,4 +1,4 @@
-package com.omega13.codecademy.controllers;
+package com.omega13.codecademy.controllers.crud;
 
 import com.omega13.codecademy.database.CourseData;
 import com.omega13.codecademy.database.ModuleData;
