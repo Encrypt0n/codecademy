@@ -57,4 +57,9 @@ public class CourseMember {
     public String getCountry() {
         return country;
     }
+
+    @Override
+    public String toString(){
+        return this.getName();
+    }
 }

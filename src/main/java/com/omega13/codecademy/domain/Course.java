@@ -40,7 +40,10 @@ public class Course {
         return level;
     }
 
-
+    @Override
+    public String toString(){
+        return this.getTitle();
+    }
 
 
 
