@@ -40,13 +40,6 @@ public class EnrollmentData {
         } catch (SQLException e) {
             throw new Error("Problem", e);
         } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
         }
     }
 
@@ -88,6 +81,30 @@ public class EnrollmentData {
 
         }
 
+
+    }
+
+    public void deleteEnrollment(int id) {
+
+        try {
+            String query = " delete from Inschrijving WHERE ID =?";
+
+
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt (1, id);
+
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+            System.out.println("gelukt");
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
 
     }
 

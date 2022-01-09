@@ -12,13 +12,11 @@ import java.io.IOException;
 
 public class HomeController {
     @FXML
-    Button btn_user;
+    Button btn_crud;
 
     @FXML
-    Button btn_enrollment;
+    Button btn_overview;
 
-    @FXML
-    Button btn_course;
 
     SceneController sceneController;
 
@@ -27,17 +25,13 @@ public class HomeController {
     }
 
     @FXML
-    private void onUserButtonClick(ActionEvent e) throws IOException {
-        sceneController.sceneSwitcher("coursemember-view.fxml", btn_user);
+    private void onCRUDClick(ActionEvent e) throws IOException {
+        sceneController.sceneSwitcher("crud-view.fxml", btn_crud);
     }
 
     @FXML
-    private void onEnrollmentClick(ActionEvent e) throws IOException {
-        sceneController.sceneSwitcher("enrollment-view.fxml", btn_enrollment);
+    private void onOverviewClick(ActionEvent e) throws IOException {
+        sceneController.sceneSwitcher("crud-view.fxml", btn_overview);
     }
 
-    @FXML
-    private void onCourseClick(ActionEvent e) throws IOException {
-        sceneController.sceneSwitcher("course-view.fxml", btn_course);
-    }
 }

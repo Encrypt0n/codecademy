@@ -7,6 +7,7 @@ import com.omega13.codecademy.database.EnrollmentData;
 import com.omega13.codecademy.domain.Course;
 import com.omega13.codecademy.domain.CourseMember;
 import com.omega13.codecademy.domain.Enrollment;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -34,12 +35,23 @@ public class EnrollmentController {
     @FXML
     private Button btn_return;
 
+    @FXML
+    TableView<Enrollment> Enrollments;
+
+    @FXML
+    TableColumn<Enrollment, String> Name;
+    @FXML
+    TableColumn<Enrollment, String> Course;
+    @FXML
+    TableColumn<Enrollment, String> RegistrationDate;
+
     private CourseMemberData courseMemberData;
     private CourseData courseData;
     private CourseMember selectedMember;
     private Course selectedCourse;
     private EnrollmentData enrollmentData;
     private SceneController sceneController;
+    private int selectedId;
 
     public EnrollmentController(){
         this.courseMemberData = new CourseMemberData();
@@ -50,9 +62,35 @@ public class EnrollmentController {
 
     @FXML
     public void initialize(){
+        fillTable();
         fillCourseMembers();
         fillCourse();
     }
+
+    private void fillTable(){
+        Name.setCellValueFactory(data -> new SimpleStringProperty(this.courseMemberData.getCourseMember(data.getValue().getCourseMemberId()).getName()));
+        Course.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getCourseId()).getTitle()));
+        RegistrationDate.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getRegistrationDate().toString()));
+
+        Enrollments.getItems().setAll(enrollmentData.getEnrollments());
+        Enrollments.getSelectionModel().selectedIndexProperty().addListener((num) -> setEnrollmentData());
+    }
+
+    private void setEnrollmentData(){
+        if(Enrollments.isPressed()) {
+            Enrollment object = Enrollments.getSelectionModel().selectedItemProperty().get();
+            selectedId = object.getId();
+            CourseMemberDropdown.setValue(courseMemberData.getCourseMember(object.getCourseMemberId()));
+            CourseDropdown.setValue(courseData.getCourse(object.getCourseId()));
+        }
+    }
+
+    @FXML
+    private void deleteEnrollment(ActionEvent e){
+        enrollmentData.deleteEnrollment(this.selectedId);
+        Enrollments.getItems().setAll(enrollmentData.getEnrollments());
+    }
+
 
     private void fillCourseMembers(){
         ObservableList<CourseMember> members = FXCollections.observableArrayList();
@@ -87,8 +125,8 @@ public class EnrollmentController {
         if(checkIfEnrolled()){
             Date date = new Date();
             java.sql.Date currentDate = new java.sql.Date(date.getTime());
-            //enrollmentData.addEnrollment(currentDate, selectedMember.getId(), -1, selectedCourse.getId());
-            Feedback.setText("Succesvol ingeschreven!");
+            enrollmentData.addEnrollment(currentDate, selectedMember.getId(), -1, selectedCourse.getId());
+            Enrollments.getItems().setAll(enrollmentData.getEnrollments());
         }
     }
 
@@ -105,6 +143,6 @@ public class EnrollmentController {
 
     @FXML
     public void returnHome(ActionEvent e) throws IOException {
-        sceneController.sceneSwitcher("home-view.fxml", btn_return);
+        sceneController.sceneSwitcher("CRUD-view.fxml", btn_return);
     }
 }

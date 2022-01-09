@@ -41,4 +41,5 @@ public class Enrollment {
     public int getCertificateId() {
         return this.certificateId;
     }
+
 }

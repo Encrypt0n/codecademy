@@ -138,7 +138,7 @@ public class CourseMemberController implements Initializable {
 
     @FXML
     public void returnHome(ActionEvent e) throws IOException {
-        sceneController.sceneSwitcher("home-view.fxml", btn_return);
+        sceneController.sceneSwitcher("CRUD-view.fxml", btn_return);
     }
 
 
