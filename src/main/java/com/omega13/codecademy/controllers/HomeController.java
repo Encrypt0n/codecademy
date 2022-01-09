@@ -26,12 +26,13 @@ public class HomeController {
 
     @FXML
     private void onCRUDClick(ActionEvent e) throws IOException {
-        sceneController.sceneSwitcher("crud-view.fxml", btn_crud);
+        sceneController.sceneSwitcher("crud/crud-view.fxml", btn_crud);
     }
 
     @FXML
     private void onOverviewClick(ActionEvent e) throws IOException {
-        sceneController.sceneSwitcher("crud-view.fxml", btn_overview);
+        sceneController.sceneSwitcher("overview/overview-view.fxml", btn_overview);
     }
+
 
 }

@@ -1,7 +1,8 @@
-package com.omega13.codecademy.controllers;
+package com.omega13.codecademy.controllers.crud;
 
 
 import com.omega13.codecademy.Home;
+import com.omega13.codecademy.controllers.SceneController;
 import com.omega13.codecademy.database.CourseMemberData;
 import com.omega13.codecademy.domain.CourseMember;
 import javafx.beans.property.SimpleStringProperty;
@@ -138,7 +139,7 @@ public class CourseMemberController implements Initializable {
 
     @FXML
     public void returnHome(ActionEvent e) throws IOException {
-        sceneController.sceneSwitcher("CRUD-view.fxml", btn_return);
+        sceneController.sceneSwitcher("crud/CRUD-view.fxml", btn_return);
     }
 
 
