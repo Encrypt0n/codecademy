@@ -20,27 +20,24 @@ public class HomeController {
     @FXML
     Button btn_course;
 
+    SceneController sceneController;
+
+    public HomeController(){
+        this.sceneController = new SceneController();
+    }
+
     @FXML
     private void onUserButtonClick(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Home.class.getResource("coursemember-view.fxml"));
-        Stage stage = (Stage) btn_user.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
+        sceneController.sceneSwitcher("coursemember-view.fxml", btn_user);
     }
 
     @FXML
     private void onEnrollmentClick(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Home.class.getResource("enrollment-view.fxml"));
-        Stage stage = (Stage) btn_enrollment.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
+        sceneController.sceneSwitcher("enrollment-view.fxml", btn_enrollment);
     }
 
     @FXML
     private void onCourseClick(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Home.class.getResource("course-view.fxml"));
-        Stage stage = (Stage) btn_user.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
+        sceneController.sceneSwitcher("course-view.fxml", btn_course);
     }
 }

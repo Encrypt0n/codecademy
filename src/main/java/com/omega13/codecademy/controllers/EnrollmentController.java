@@ -34,18 +34,18 @@ public class EnrollmentController {
     @FXML
     private Button btn_return;
 
-
-
     private CourseMemberData courseMemberData;
     private CourseData courseData;
     private CourseMember selectedMember;
     private Course selectedCourse;
     private EnrollmentData enrollmentData;
+    private SceneController sceneController;
 
     public EnrollmentController(){
         this.courseMemberData = new CourseMemberData();
         this.enrollmentData = new EnrollmentData();
         this.courseData = new CourseData();
+        this.sceneController = new SceneController();
     }
 
     @FXML
@@ -105,9 +105,6 @@ public class EnrollmentController {
 
     @FXML
     public void returnHome(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Home.class.getResource("home-view.fxml"));
-        Stage stage = (Stage) btn_return.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
+        sceneController.sceneSwitcher("home-view.fxml", btn_return);
     }
 }

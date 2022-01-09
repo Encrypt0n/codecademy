@@ -64,7 +64,13 @@ public class CourseMemberController implements Initializable {
     boolean gender;
     int id;
 
-    public CourseMemberData memberData = new CourseMemberData();
+    private CourseMemberData memberData;
+    private SceneController sceneController;
+
+    public CourseMemberController(){
+        this.memberData = new CourseMemberData();
+        this.sceneController = new SceneController();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -132,10 +138,7 @@ public class CourseMemberController implements Initializable {
 
     @FXML
     public void returnHome(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Home.class.getResource("home-view.fxml"));
-        Stage stage = (Stage) btn_return.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
+        sceneController.sceneSwitcher("home-view.fxml", btn_return);
     }
 
 
