@@ -1,7 +1,8 @@
-package com.omega13.codecademy.controllers;
+package com.omega13.codecademy.controllers.crud;
 
 
 import com.omega13.codecademy.Home;
+import com.omega13.codecademy.controllers.SceneController;
 import com.omega13.codecademy.database.CourseMemberData;
 import com.omega13.codecademy.domain.CourseMember;
 import javafx.beans.property.SimpleStringProperty;
@@ -64,7 +65,13 @@ public class CourseMemberController implements Initializable {
     boolean gender;
     int id;
 
-    public CourseMemberData memberData = new CourseMemberData();
+    private CourseMemberData memberData;
+    private SceneController sceneController;
+
+    public CourseMemberController(){
+        this.memberData = new CourseMemberData();
+        this.sceneController = new SceneController();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -132,10 +139,7 @@ public class CourseMemberController implements Initializable {
 
     @FXML
     public void returnHome(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Home.class.getResource("home-view.fxml"));
-        Stage stage = (Stage) btn_return.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
+        sceneController.sceneSwitcher("crud/CRUD-view.fxml", btn_return);
     }
 
 

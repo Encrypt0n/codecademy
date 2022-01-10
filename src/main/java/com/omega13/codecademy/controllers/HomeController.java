@@ -12,24 +12,27 @@ import java.io.IOException;
 
 public class HomeController {
     @FXML
-    Button btn_user;
+    Button btn_crud;
 
     @FXML
-    Button btn_enrollment;
+    Button btn_overview;
 
-    @FXML
-    private void onUserButtonClick(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Home.class.getResource("coursemember-view.fxml"));
-        Stage stage = (Stage) btn_user.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
+
+    SceneController sceneController;
+
+    public HomeController(){
+        this.sceneController = new SceneController();
     }
 
     @FXML
-    private void onEnrollmentClick(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Home.class.getResource("enrollment-view.fxml"));
-        Stage stage = (Stage) btn_user.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
+    private void onCRUDClick(ActionEvent e) throws IOException {
+        sceneController.sceneSwitcher("crud/crud-view.fxml", btn_crud);
     }
+
+    @FXML
+    private void onOverviewClick(ActionEvent e) throws IOException {
+        sceneController.sceneSwitcher("overview/overview-view.fxml", btn_overview);
+    }
+
+
 }
