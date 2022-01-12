@@ -13,4 +13,6 @@ module com.omega13.codecademy {
     opens com.omega13.codecademy.controllers.crud to javafx.fxml;
     exports com.omega13.codecademy.controllers.overview;
     opens com.omega13.codecademy.controllers.overview to javafx.fxml;
+    exports com.omega13.codecademy.controllers.progress;
+    opens com.omega13.codecademy.controllers.progress to javafx.fxml;
 }

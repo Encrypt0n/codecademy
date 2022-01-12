@@ -12,6 +12,8 @@ public class OverviewController {
 
     @FXML
     private Button btn_certificateGender;
+    @FXML
+    private Button btn_achievedCertificate;
 
     public OverviewController(){
         this.sceneController = new SceneController();
@@ -20,5 +22,10 @@ public class OverviewController {
     @FXML
     public void onCertificateGenderClick(ActionEvent e) throws IOException {
         sceneController.sceneSwitcher("overview/certificategender-view.fxml", btn_certificateGender);
+    }
+
+    @FXML
+    public void onAchievedCertificateClick(ActionEvent e) throws IOException {
+        sceneController.sceneSwitcher("overview/achievedcertificate-view.fxml", btn_achievedCertificate);
     }
 }
