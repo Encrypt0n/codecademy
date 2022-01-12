@@ -17,6 +17,9 @@ public class HomeController {
     @FXML
     Button btn_overview;
 
+    @FXML
+    Button btn_progress;
+
 
     SceneController sceneController;
 
@@ -32,6 +35,11 @@ public class HomeController {
     @FXML
     private void onOverviewClick(ActionEvent e) throws IOException {
         sceneController.sceneSwitcher("overview/overview-view.fxml", btn_overview);
+    }
+
+    @FXML
+    private void onProgressClick(ActionEvent e) throws IOException {
+        sceneController.sceneSwitcher("progress/progresscourse-view.fxml", btn_progress);
     }
 
 

@@ -20,6 +20,7 @@
                </image></ImageView>
             <GridPane hgap="10.0">
               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -27,14 +28,19 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btn_crud" mnemonicParsing="false" onAction="#onCRUDClick" prefHeight="25.0" prefWidth="304.0" text="CRUD">
+                  <Button fx:id="btn_crud" mnemonicParsing="false" onAction="#onCRUDClick" prefHeight="25.0" prefWidth="304.0" text="CRUD" GridPane.columnIndex="1">
                      <GridPane.margin>
-                        <Insets left="15.0" />
+                        <Insets />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btn_overview" mnemonicParsing="false" onAction="#onOverviewClick" prefHeight="25.0" prefWidth="339.0" text="Overzichten" GridPane.columnIndex="1">
+                  <Button fx:id="btn_overview" mnemonicParsing="false" onAction="#onOverviewClick" prefHeight="25.0" prefWidth="339.0" text="Overzichten" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets right="15.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="btn_progress" mnemonicParsing="false" onAction="#onProgressClick" prefHeight="25.0" prefWidth="304.0" text="Voortgang">
+                     <GridPane.margin>
+                        <Insets left="15.0" />
                      </GridPane.margin>
                   </Button>
                </children>
