@@ -34,5 +34,6 @@
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="205.0" text="Behaalde cursussen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
+      <Button fx:id="btn_return" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReturnClick" text="Terug" />
    </children>
 </AnchorPane>
