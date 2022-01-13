@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.omega13.codecademy.controllers.progress.ProgressCourseController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="243.0" layoutY="14.0" text="Voortgang">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="btn_return" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReturnClick" text="Terug" />
+            <HBox alignment="CENTER" layoutY="129.0" prefHeight="121.0" prefWidth="600.0" spacing="50.0">
+               <children>
+                  <Button fx:id="btn_modules" mnemonicParsing="false" onAction="#onModulesClick" text="Modules">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Button>
+                  <Button fx:id="btn_webcasts" mnemonicParsing="false" onAction="#onWebcastsClick" text="Webcasts" />
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
