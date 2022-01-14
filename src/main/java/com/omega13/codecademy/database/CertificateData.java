@@ -41,4 +41,28 @@ public class CertificateData {
         }
         return null;
     }
+
+    public int getAmountCertificate(int id) {
+        int amount = 0;
+        ResultSet rs;
+
+        try{
+            String query = "SELECT COUNT(Certificaat.ID) FROM Certificaat INNER JOIN Inschrijving ON Certificaat.ID = Inschrijving.CertificaatID INNER JOIN Cursus ON Inschrijving.CursusID = Cursus.ID WHERE Cursus.ID = " + id;
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            rs = preparedStmt.executeQuery();
+
+            while(rs.next()){
+                amount = Integer.parseInt(rs.getString(1));
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return amount;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

@@ -16,6 +16,8 @@ public class OverviewController {
     Button btn_achievedCertificate;
     @FXML
     Button btn_return;
+    @FXML
+    Button btn_courseCertificate;
 
     public OverviewController(){
         this.sceneController = new SceneController();
@@ -29,6 +31,11 @@ public class OverviewController {
     @FXML
     private void onAchievedCertificateClick(ActionEvent e) throws IOException {
         this.sceneController.sceneSwitcher("overview/achievedcertificate-view.fxml", btn_achievedCertificate);
+    }
+
+    @FXML
+    private void onCourseCertificateClick() throws IOException {
+        this.sceneController.sceneSwitcher("overview/coursecertificate-view.fxml", btn_courseCertificate);
     }
 
     @FXML

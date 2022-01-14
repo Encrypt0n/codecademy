@@ -31,7 +31,7 @@
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="213.0" text="Voortgang cursus" GridPane.rowIndex="1" />
             <Button fx:id="btn_achievedCertificate" mnemonicParsing="false" onAction="#onAchievedCertificateClick" prefHeight="25.0" prefWidth="249.0" text="Behaalde certificaten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="197.0" text="Top 3 webcasts" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="205.0" text="Behaalde cursussen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="btn_courseCertificate" mnemonicParsing="false" onAction="#onCourseCertificateClick" prefHeight="25.0" prefWidth="205.0" text="Behaalde cursussen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Button fx:id="btn_return" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReturnClick" text="Terug" />
