@@ -45,6 +45,8 @@ public class EnrollmentController {
     TableColumn<Enrollment, String> Course;
     @FXML
     TableColumn<Enrollment, String> RegistrationDate;
+    @FXML
+    TableColumn<Enrollment, String> Active;
 
     private CourseMemberData courseMemberData;
     private CourseData courseData;
@@ -72,6 +74,7 @@ public class EnrollmentController {
         Name.setCellValueFactory(data -> new SimpleStringProperty(this.courseMemberData.getCourseMember(data.getValue().getCourseMemberId()).getName()));
         Course.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getCourseId()).getTitle()));
         RegistrationDate.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getRegistrationDate().toString()));
+        Active.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getActiveStatus()));
 
         Enrollments.getItems().setAll(enrollmentData.getEnrollments());
         Enrollments.getSelectionModel().selectedIndexProperty().addListener((num) -> setEnrollmentData());
@@ -123,23 +126,10 @@ public class EnrollmentController {
     @FXML
     private void enrollCourse(){
         if(selectedMember == null || selectedCourse == null) return;
-        if(checkIfEnrolled()){
             Date date = new Date();
             java.sql.Date currentDate = new java.sql.Date(date.getTime());
             enrollmentData.addEnrollment(currentDate, selectedMember.getId(), -1, selectedCourse.getId());
             Enrollments.getItems().setAll(enrollmentData.getEnrollments());
-        }
-    }
-
-    private boolean checkIfEnrolled(){
-        List<Enrollment> enrollments = enrollmentData.getEnrollments();
-        for(Enrollment e : enrollments){
-            if(e.getCourseMemberId() == selectedMember.getId() && e.getCourseId() == selectedCourse.getId()){
-                Feedback.setText("Cursist is al ingeschreven!");
-                return false;
-            }
-        }
-        return true;
     }
 
     @FXML

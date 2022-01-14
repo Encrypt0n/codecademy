@@ -18,6 +18,9 @@ public class EnrollmentData {
     public void addEnrollment(java.sql.Date startDate, int CursistID, int CertificaatID, int CursusID) {
 
         try {
+            updateActiveStatus(CursistID, CursusID);
+
+
             String query7 = " insert into Inschrijving (Inschrijfdatum, CursistID, CertificaatID, CursusID)"
                     + " values (?, ?, ?, ?)";
 
@@ -50,6 +53,7 @@ public class EnrollmentData {
         int courseMemberId;
         int certificateId;
         int courseId;
+        boolean active;
         ResultSet rs;
         try {
             String query = " select * from Inschrijving";
@@ -67,8 +71,9 @@ public class EnrollmentData {
                 courseMemberId = rs.getInt(3);// Retrieve the first column value
                 certificateId = rs.getInt(4);
                 courseId = rs.getInt(5);
+                active = rs.getBoolean(6);
 
-                enrollments.add(new Enrollment(id, registrationDate, courseMemberId, certificateId, courseId));
+                enrollments.add(new Enrollment(id, registrationDate, courseMemberId, certificateId, courseId, active));
             }
 
             rs.close();
@@ -82,6 +87,16 @@ public class EnrollmentData {
         }
 
 
+    }
+
+    private void updateActiveStatus(int CursistID, int CursusID){
+        try{
+            String updateQuery = "UPDATE Inschrijving set Inschrijving.Actief = 0 WHERE Inschrijving.CursistID = " + CursistID + " AND Inschrijving.CursusID = " + CursusID;
+            PreparedStatement prepareStmtUpdate = conn.prepareStatement(updateQuery);
+            prepareStmtUpdate.executeUpdate();
+        }catch (SQLException e){
+            throw new Error("Problem", e);
+        }
     }
 
     public void deleteEnrollment(int id) {

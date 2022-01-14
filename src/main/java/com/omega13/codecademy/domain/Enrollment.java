@@ -12,13 +12,15 @@ public class Enrollment {
     private int courseMemberId;
     private int certificateId;
     private int courseId;
+    private boolean active;
 
-    public Enrollment(int id, Date registrationDate, int courseMemberId, int certificateId, int courseId) {
+    public Enrollment(int id, Date registrationDate, int courseMemberId, int certificateId, int courseId, boolean active) {
         this.id = id;
         this.registrationDate = registrationDate;
         this.courseMemberId = courseMemberId;
         this.certificateId = certificateId;
         this.courseId = courseId;
+        this.active = active;
     }
 
     public int getCourseMemberId() {
@@ -40,6 +42,16 @@ public class Enrollment {
 
     public int getCertificateId() {
         return this.certificateId;
+    }
+
+    public String getActiveStatus() {
+        if(active){
+            return "Bezig";
+        }else if(this.certificateId > 0){
+            return "Gehaald";
+        }else {
+            return "Gesloten";
+        }
     }
 
 

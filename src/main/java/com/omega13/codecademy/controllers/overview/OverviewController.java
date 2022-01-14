@@ -18,6 +18,12 @@ public class OverviewController {
     Button btn_return;
     @FXML
     Button btn_courseCertificate;
+    @FXML
+    Button btn_topWebcasts;
+    @FXML
+    Button btn_avgProgress;
+    @FXML
+    Button btn_courseProgress;
 
     public OverviewController(){
         this.sceneController = new SceneController();
@@ -36,6 +42,21 @@ public class OverviewController {
     @FXML
     private void onCourseCertificateClick() throws IOException {
         this.sceneController.sceneSwitcher("overview/coursecertificate-view.fxml", btn_courseCertificate);
+    }
+
+    @FXML
+    private void onAvgProgressClick() throws IOException {
+        //this.sceneController.sceneSwitcher("overview/coursecertificate-view.fxml", btn_courseCertificate);
+    }
+
+    @FXML
+    private void onCourseProgressClick() throws IOException {
+        //this.sceneController.sceneSwitcher("overview/coursecertificate-view.fxml", btn_courseCertificate);
+    }
+
+    @FXML
+    private void onTopWebcastsClick() throws IOException {
+        this.sceneController.sceneSwitcher("overview/topwebcasts-view.fxml", btn_topWebcasts);
     }
 
     @FXML
