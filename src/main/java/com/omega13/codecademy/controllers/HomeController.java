@@ -39,7 +39,7 @@ public class HomeController {
 
     @FXML
     private void onProgressClick(ActionEvent e) throws IOException {
-        sceneController.sceneSwitcher("progress/progresscourse-view.fxml", btn_progress);
+        sceneController.sceneSwitcher("progress/progress-view.fxml", btn_progress);
     }
 
 
