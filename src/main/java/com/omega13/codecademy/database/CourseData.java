@@ -4,6 +4,7 @@ import com.omega13.codecademy.domain.Course;
 import com.omega13.codecademy.domain.CourseMember;
 import com.omega13.codecademy.domain.Enums.Level;
 
+import java.lang.reflect.Member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -73,7 +74,7 @@ public class CourseData {
     }
 
     public Course getCourse(int courseId){
-        Course course = new Course();
+        Course course = null;
         int id;
         String title;
         String subject;
@@ -111,4 +112,85 @@ public class CourseData {
 
         }
     }
+
+    public List<Course> getCoursesPerMember(int memberId){
+        ArrayList<Course> Courses = new ArrayList<>();
+        //ArrayList<CourseMember> courseMembers = new ArrayList<>();
+
+        int id;
+        String title;
+        String subject;
+        String introtext;
+        Level level;
+        ResultSet rs;
+
+        try{
+            String query = "" +
+                    "SELECT * FROM Cursus " +
+                    "INNER JOIN Inschrijving ON Cursus.ID = Inschrijving.CursusID " +
+                    "AND Inschrijving.CursistID = " + memberId;
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            rs = preparedStmt.executeQuery();
+
+            while(rs.next()){
+                id = rs.getInt(1);
+                title = rs.getString(2);        // Retrieve the first column value
+                subject = rs.getString(3);// Retrieve the first column value
+                introtext = rs.getString(4);
+                level = Level.valueOf(rs.getString(5));
+
+                Courses.add(new Course(id, title, subject, introtext, level));
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return Courses;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /*public List<Course> getCoursesPerMember(int courseId){
+        ArrayList<Course> Courses = new ArrayList<>();
+        int id;
+        String title;
+        String subject;
+        String introtext;
+        Level level;
+        String interesting;
+        ResultSet rs;
+
+        try {
+            String query = " select * from Cursus WHERE id = " + courseId;
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+            // execute the preparedstatement
+            rs = preparedStmt.executeQuery();
+
+
+            while (rs.next()) {               // Position the cursor                  4
+                id = rs.getInt(1);
+                title = rs.getString(2);        // Retrieve the first column value
+                subject = rs.getString(3);// Retrieve the first column value
+                introtext = rs.getString(4);
+                level = Level.valueOf(rs.getString(5));
+
+                //course = new Course(id, title, subject, introtext, level);
+                Courses.add(new Course(id, title, subject, introtext, level));
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return Courses;
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+    }*/
 }

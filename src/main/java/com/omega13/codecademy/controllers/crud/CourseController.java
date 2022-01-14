@@ -7,6 +7,7 @@ import com.omega13.codecademy.domain.CourseMember;
 import com.omega13.codecademy.domain.Enums.Level;
 import com.omega13.codecademy.domain.Module;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,14 +25,17 @@ public class CourseController implements Initializable {
     VBox ModuleVBox;
 
     @FXML
-    MenuButton DropdownStandard;
+    private ComboBox<Module> ModuleDropdown;
+
+    private Module selectedModule;
 
     public CourseData courseData = new CourseData();
     public ModuleData moduleData = new ModuleData();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       setDropdownValue(DropdownStandard);
+
+        fillModules();
     }
 
     @FXML
@@ -52,5 +56,19 @@ public class CourseController implements Initializable {
                 dropdown.setText(module.getTitle());
             });
         }
+    }
+
+    public void fillModules() {
+        ObservableList<Module> modules = FXCollections.observableArrayList();
+        this.moduleData.getModules();
+        modules.addAll(this.moduleData.getModules());
+
+        ModuleDropdown.setItems(modules);
+
+
+        ModuleDropdown.valueProperty().addListener((obs, oldval, newval) -> {
+            if (newval != null)
+                this.selectedModule = newval;
+        });
     }
 }

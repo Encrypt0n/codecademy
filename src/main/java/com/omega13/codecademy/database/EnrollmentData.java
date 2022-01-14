@@ -84,6 +84,53 @@ public class EnrollmentData {
 
     }
 
+    public Enrollment getEnrollment(int courseMemberId){
+        Enrollment enrollment = null;
+        int id;
+        java.sql.Date enrollmentdate;
+        int courseMember;
+        int certificate;
+        int course;
+        java.sql.Date birthday;
+        boolean gender;
+        String address;
+        String city;
+        String country;
+        ResultSet rs;
+
+        try {
+            String query = " select * from Inschrijving WHERE CursistID = " + courseMemberId;
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+            // execute the preparedstatement
+            rs = preparedStmt.executeQuery();
+
+
+            while (rs.next()) {               // Position the cursor                  4
+                id = rs.getInt(1);
+                enrollmentdate = rs.getDate(2);        // Retrieve the first column value
+                courseMember = rs.getInt(3);// Retrieve the first column value
+                certificate = rs.getInt(4);
+                course = rs.getInt(5);
+
+
+                enrollment = new Enrollment(id, enrollmentdate, courseMember, certificate, course);
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return enrollment;
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+    }
+
+
+
     public void deleteEnrollment(int id) {
 
         try {

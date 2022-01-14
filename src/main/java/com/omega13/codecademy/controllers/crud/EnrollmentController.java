@@ -123,24 +123,14 @@ public class EnrollmentController {
     @FXML
     private void enrollCourse(){
         if(selectedMember == null || selectedCourse == null) return;
-        if(checkIfEnrolled()){
             Date date = new Date();
             java.sql.Date currentDate = new java.sql.Date(date.getTime());
             enrollmentData.addEnrollment(currentDate, selectedMember.getId(), -1, selectedCourse.getId());
             Enrollments.getItems().setAll(enrollmentData.getEnrollments());
-        }
+
     }
 
-    private boolean checkIfEnrolled(){
-        List<Enrollment> enrollments = enrollmentData.getEnrollments();
-        for(Enrollment e : enrollments){
-            if(e.getCourseMemberId() == selectedMember.getId() && e.getCourseId() == selectedCourse.getId()){
-                Feedback.setText("Cursist is al ingeschreven!");
-                return false;
-            }
-        }
-        return true;
-    }
+
 
     @FXML
     public void returnHome(ActionEvent e) throws IOException {

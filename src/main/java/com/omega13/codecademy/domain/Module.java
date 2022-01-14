@@ -24,6 +24,11 @@ public class Module {
         return title;
     }
 
+    @Override
+    public String toString(){
+        return this.getTitle();
+    }
+
 
 
 
