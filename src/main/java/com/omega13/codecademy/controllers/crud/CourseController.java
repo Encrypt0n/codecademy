@@ -139,6 +139,7 @@ public class CourseController implements Initializable {
     public void addCourse(ActionEvent e){
         if(modules.size() == 0) return;
         courseData.addCourse(newName.getText(), newSubject.getText(), newIntrotext.getText(), selectedLevel, modules);
+        CourseTable.getItems().setAll(courseData.getCourses());
         //Courses.refresh();
     }
 
