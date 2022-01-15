@@ -45,6 +45,8 @@ public class EnrollmentController {
     TableColumn<Enrollment, String> Course;
     @FXML
     TableColumn<Enrollment, String> RegistrationDate;
+    @FXML
+    TableColumn<Enrollment, String> Active;
 
     private CourseMemberData courseMemberData;
     private CourseData courseData;
@@ -72,6 +74,7 @@ public class EnrollmentController {
         Name.setCellValueFactory(data -> new SimpleStringProperty(this.courseMemberData.getCourseMember(data.getValue().getCourseMemberId()).getName()));
         Course.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getCourseId()).getTitle()));
         RegistrationDate.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getRegistrationDate().toString()));
+        Active.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getActiveStatus()));
 
         Enrollments.getItems().setAll(enrollmentData.getEnrollments());
         Enrollments.getSelectionModel().selectedIndexProperty().addListener((num) -> setEnrollmentData());
@@ -127,10 +130,7 @@ public class EnrollmentController {
             java.sql.Date currentDate = new java.sql.Date(date.getTime());
             enrollmentData.addEnrollment(currentDate, selectedMember.getId(), -1, selectedCourse.getId());
             Enrollments.getItems().setAll(enrollmentData.getEnrollments());
-
     }
-
-
 
     @FXML
     public void returnHome(ActionEvent e) throws IOException {

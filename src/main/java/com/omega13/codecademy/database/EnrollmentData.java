@@ -18,6 +18,9 @@ public class EnrollmentData {
     public void addEnrollment(java.sql.Date startDate, int CursistID, int CertificaatID, int CursusID) {
 
         try {
+            updateActiveStatus(CursistID, CursusID);
+
+
             String query7 = " insert into Inschrijving (Inschrijfdatum, CursistID, CertificaatID, CursusID)"
                     + " values (?, ?, ?, ?)";
 
@@ -50,6 +53,7 @@ public class EnrollmentData {
         int courseMemberId;
         int certificateId;
         int courseId;
+        boolean active;
         ResultSet rs;
         try {
             String query = " select * from Inschrijving";
@@ -67,8 +71,9 @@ public class EnrollmentData {
                 courseMemberId = rs.getInt(3);// Retrieve the first column value
                 certificateId = rs.getInt(4);
                 courseId = rs.getInt(5);
+                active = rs.getBoolean(6);
 
-                enrollments.add(new Enrollment(id, registrationDate, courseMemberId, certificateId, courseId));
+                enrollments.add(new Enrollment(id, registrationDate, courseMemberId, certificateId, courseId, active));
             }
 
             rs.close();
@@ -84,52 +89,15 @@ public class EnrollmentData {
 
     }
 
-    public Enrollment getEnrollment(int courseMemberId){
-        Enrollment enrollment = null;
-        int id;
-        java.sql.Date enrollmentdate;
-        int courseMember;
-        int certificate;
-        int course;
-        java.sql.Date birthday;
-        boolean gender;
-        String address;
-        String city;
-        String country;
-        ResultSet rs;
-
-        try {
-            String query = " select * from Inschrijving WHERE CursistID = " + courseMemberId;
-
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-
-            // execute the preparedstatement
-            rs = preparedStmt.executeQuery();
-
-
-            while (rs.next()) {               // Position the cursor                  4
-                id = rs.getInt(1);
-                enrollmentdate = rs.getDate(2);        // Retrieve the first column value
-                courseMember = rs.getInt(3);// Retrieve the first column value
-                certificate = rs.getInt(4);
-                course = rs.getInt(5);
-
-
-                enrollment = new Enrollment(id, enrollmentdate, courseMember, certificate, course);
-            }
-
-            rs.close();
-            preparedStmt.close();
-            return enrollment;
-
-        } catch (SQLException e) {
+    private void updateActiveStatus(int CursistID, int CursusID){
+        try{
+            String updateQuery = "UPDATE Inschrijving set Inschrijving.Actief = 0 WHERE Inschrijving.CursistID = " + CursistID + " AND Inschrijving.CursusID = " + CursusID;
+            PreparedStatement prepareStmtUpdate = conn.prepareStatement(updateQuery);
+            prepareStmtUpdate.executeUpdate();
+        }catch (SQLException e){
             throw new Error("Problem", e);
-        } finally {
-
         }
     }
-
-
 
     public void deleteEnrollment(int id) {
 
