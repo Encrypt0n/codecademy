@@ -89,7 +89,7 @@ public class CourseProgressController implements Initializable {
 
             System.out.println(moduleId );
             System.out.println(memberId);
-            progress = this.progressData.getProgress(moduleId, memberId);
+            progress = this.progressData.getProgressForModule(moduleId, memberId);
             /*
             percentageLabel.setText("Deze module is voor " + progress.getPercentage() + "% af");
 

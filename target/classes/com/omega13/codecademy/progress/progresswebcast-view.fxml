@@ -19,20 +19,20 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TableView layoutY="49.0" prefHeight="230.0" prefWidth="294.0">
+            <TableView fx:id="MemberTable" layoutY="49.0" prefHeight="230.0" prefWidth="294.0">
               <columns>
-                <TableColumn prefWidth="299.20001220703125" text="Cursist" />
+                <TableColumn fx:id="MemberColumn" prefWidth="299.20001220703125" text="Cursist" />
               </columns>
             </TableView>
-            <TableView layoutX="293.0" layoutY="49.0" prefHeight="230.0" prefWidth="300.0">
+            <TableView fx:id="WebcastTable" layoutX="293.0" layoutY="49.0" prefHeight="230.0" prefWidth="300.0">
                <columns>
-                  <TableColumn prefWidth="299.20001220703125" text="Webcast" />
+                  <TableColumn fx:id="WebcastColumn" prefWidth="299.20001220703125" text="Webcast" />
                </columns>
             </TableView>
             <Button fx:id="btn_return" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReturnClick" text="Terug" />
          </children>
       </Pane>
       <Slider fx:id="ProgressSlider" layoutX="198.0" layoutY="329.0" onMouseReleased="#onSliderChanged" prefHeight="14.0" prefWidth="226.0" />
-      <Button layoutX="281.0" layoutY="353.0" mnemonicParsing="false" text="Opslaan" />
+      <Button layoutX="281.0" layoutY="353.0" mnemonicParsing="false" onAction="#saveProgress" text="Opslaan" />
    </children>
 </AnchorPane>

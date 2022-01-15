@@ -16,12 +16,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.net.URL;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.concurrent.SynchronousQueue;
 
-public class ProgressController implements Initializable {
+public class ProgressCourseController implements Initializable {
     @FXML
     Slider ProgressSlider;
     @FXML
@@ -98,7 +95,7 @@ public class ProgressController implements Initializable {
             moduleId = ModuleTable.getSelectionModel().getSelectedItem().getId();
             //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.progressData.getProgress(data.getValue().getId()).toString());
             
-            progress = this.progressData.getProgress(moduleId, memberId);
+            progress = this.progressData.getProgressForModule(moduleId, memberId);
 
 
             if(progress != null) {
@@ -120,7 +117,7 @@ public class ProgressController implements Initializable {
     public void saveProgress(ActionEvent e){
         System.out.println("hoi");
         System.out.println(memberId);
-        progressData.addProgress((int)ProgressSlider.getValue(), memberId, contentId, moduleId);
+        progressData.addProgressForModule((int)ProgressSlider.getValue(), memberId, contentId, moduleId);
         progressData.addCertitifcate(courseId, memberId, moduleId);
         //CourseMembers.refresh();
     }

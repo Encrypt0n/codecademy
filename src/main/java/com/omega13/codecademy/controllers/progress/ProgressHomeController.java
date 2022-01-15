@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 
 import java.io.IOException;
 
-public class ProgressCourseController {
+public class ProgressHomeController {
     @FXML
     Button btn_return;
 
@@ -18,7 +18,7 @@ public class ProgressCourseController {
 
     SceneController sceneController;
 
-    public ProgressCourseController() {
+    public ProgressHomeController() {
         this.sceneController = new SceneController();
     }
 

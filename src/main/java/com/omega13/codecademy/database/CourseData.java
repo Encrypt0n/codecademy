@@ -192,7 +192,7 @@ public class CourseData {
                 PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
                 preparedStmt2.setInt (1, module.getId());
                 preparedStmt2.setInt (2, CursusID);
-                preparedStmt2.setInt (3, modules.indexOf(module));
+                preparedStmt2.setInt (3, modules.indexOf(module) +1);
 
 
 
