@@ -1,5 +1,6 @@
 package com.omega13.codecademy.controllers.progress;
 
+import com.omega13.codecademy.controllers.SceneController;
 import com.omega13.codecademy.database.CourseData;
 import com.omega13.codecademy.database.CourseMemberData;
 import com.omega13.codecademy.database.ModuleData;
@@ -11,10 +12,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,6 +35,9 @@ public class ProgressCourseController implements Initializable {
     TableColumn<Course, String> CourseColumn;
 
     @FXML
+    Button btn_return;
+
+    @FXML
     TableView<com.omega13.codecademy.domain.Module> ModuleTable;
     @FXML
     TableColumn<com.omega13.codecademy.domain.Module, String> ModuleColumn;
@@ -40,6 +46,7 @@ public class ProgressCourseController implements Initializable {
     CourseData courseData = new CourseData();
     ModuleData moduleData = new ModuleData();
     ProgressData progressData = new ProgressData();
+    SceneController sceneController = new SceneController();
 
     int memberId;
     int courseId;
@@ -127,5 +134,10 @@ public class ProgressCourseController implements Initializable {
         int sliderValue = (int) ProgressSlider.getValue();
 
         System.out.println(sliderValue);
+    }
+
+    @FXML
+    private void onReturnClick() throws IOException {
+        sceneController.sceneSwitcher("progress/progress-view.fxml", btn_return);
     }
 }

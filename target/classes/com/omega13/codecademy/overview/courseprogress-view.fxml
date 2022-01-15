@@ -30,7 +30,7 @@
                 <TableColumn fx:id="ModuleColumn" prefWidth="199.0" text="Modules" />
             </columns>
         </TableView>
-        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Terug" />
+        <Button fx:id="btn_return" layoutX="14.0" onAction="#onReturnClick" layoutY="14.0" mnemonicParsing="false" text="Terug" />
       <HBox alignment="CENTER" layoutY="291.0" prefHeight="109.0" prefWidth="600.0">
          <children>
             <Label fx:id="percentageLabel">

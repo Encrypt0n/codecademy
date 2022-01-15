@@ -1,5 +1,6 @@
 package com.omega13.codecademy.controllers.overview;
 
+import com.omega13.codecademy.controllers.SceneController;
 import com.omega13.codecademy.database.CourseData;
 import com.omega13.codecademy.database.CourseMemberData;
 import com.omega13.codecademy.database.ModuleData;
@@ -10,11 +11,9 @@ import com.omega13.codecademy.domain.Progress;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,11 +35,14 @@ public class CourseProgressController implements Initializable {
 
     @FXML
     Label percentageLabel;
+    @FXML
+    Button btn_return;
 
     CourseMemberData courseMemberData = new CourseMemberData();
     CourseData courseData = new CourseData();
     ModuleData moduleData = new ModuleData();
     ProgressData progressData = new ProgressData();
+    SceneController sceneController = new SceneController();
 
     Progress progress;
     int moduleId;
@@ -90,17 +92,17 @@ public class CourseProgressController implements Initializable {
             System.out.println(moduleId );
             System.out.println(memberId);
             progress = this.progressData.getProgressForModule(moduleId, memberId);
-            /*
+
             percentageLabel.setText("Deze module is voor " + progress.getPercentage() + "% af");
 
-            if(progress != null) {
+            if(progress == null) {
                 percentageLabel.setText("Deze module is voor 0% af");
             }
-
-             */
-
-
-            //System.out.println(progress.getPercentage());
         }
+    }
+
+    @FXML
+    private void onReturnClick() throws IOException {
+        sceneController.sceneSwitcher("overview/overview-view.fxml", btn_return);
     }
 }

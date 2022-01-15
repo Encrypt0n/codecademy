@@ -3,44 +3,47 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.omega13.codecademy.controllers.crud.CourseController">
    <children>
-      <Pane prefHeight="400.0" prefWidth="600.0">
+      <Pane prefHeight="473.0" prefWidth="600.0">
          <children>
             <Label layoutX="246.0" layoutY="14.0" text="Cursussen">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="newName" layoutX="14.0" layoutY="77.0" promptText="Naam" />
-            <TextField fx:id="newSubject" layoutX="181.0" layoutY="77.0" promptText="Onderwerp" />
-            <ComboBox fx:id="LevelDropdown" layoutX="180.0" layoutY="110.0" prefWidth="150.0">
+            <TextField fx:id="newName" layoutX="15.0" layoutY="300.0" promptText="Naam" />
+            <TextField fx:id="newSubject" layoutX="225.0" layoutY="300.0" promptText="Onderwerp" />
+            <ComboBox fx:id="LevelDropdown" layoutX="408.0" layoutY="300.0" prefWidth="150.0" promptText="Level">
             <items>
             </items>
             </ComboBox>
-            <Label layoutX="269.0" layoutY="144.0" text="Module">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <VBox fx:id="ModuleVBox" layoutX="211.0" layoutY="176.0" prefHeight="35.0" prefWidth="177.0" spacing="10">
-               <children>
-                  <ComboBox fx:id="ModuleDropdown" prefHeight="25.0" prefWidth="181.0">
-                    <items>
-                    </items>
-                  </ComboBox>
-               </children>
-            </VBox>
-            <Button layoutX="241.0" layoutY="216.0" mnemonicParsing="false" onAction="#addModule" text="Module toevoegen" />
-            <TextArea fx:id="newIntrotext" layoutX="388.0" layoutY="77.0" prefHeight="63.0" prefWidth="200.0" promptText="Introductietekst" />
-            <Button layoutX="89.0" layoutY="145.0" mnemonicParsing="false" onAction="#addCourse" text="Cursus aanmaken" />
+            <Button layoutX="241.0" layoutY="382.0" mnemonicParsing="false" onAction="#addModule" text="Module toevoegen" />
+            <TextArea fx:id="newIntrotext" layoutX="15.0" layoutY="344.0" prefHeight="63.0" prefWidth="200.0" promptText="Introductietekst" />
+            <Button layoutX="245.0" layoutY="424.0" mnemonicParsing="false" onAction="#addCourse" text="Cursus aanmaken" />
+            <ComboBox fx:id="ModuleDropdown" layoutX="225.0" layoutY="344.0" prefWidth="150.0" promptText="Module" />
+            <ListView fx:id="Modules" layoutX="383.0" layoutY="334.0" prefHeight="81.0" prefWidth="200.0" />
+            <TableView fx:id="CourseTable" layoutY="49.0" prefHeight="236.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="CourseColumn" prefWidth="109.0" text="Cursus" />
+                  <TableColumn fx:id="ModuleColumn" prefWidth="72.0" text="Modules" />
+                  <TableColumn fx:id="SubjectColumn" prefWidth="147.0" text="Onderwerp" />
+                  <TableColumn fx:id="LevelColumn" prefWidth="111.0" text="Level" />
+                  <TableColumn fx:id="IntroTextColumn" prefWidth="160.0" text="Introductietekst" />
+              </columns>
+            </TableView>
+            <Button fx:id="btn_return" layoutX="15.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReturnClick" text="Terug" />
+            <Button layoutX="425.0" layoutY="424.0" mnemonicParsing="false" onAction="#deleteCourse" text="Cursus verwijderen" />
+            <Button layoutX="62.0" layoutY="424.0" mnemonicParsing="false" onAction="#updateCourse" text="Update cursus" />
          </children>
       </Pane>
    </children>
