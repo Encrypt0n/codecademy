@@ -22,9 +22,9 @@ public class CourseMember {
         this.country = country;
     }
 
-    public CourseMember(){
+    /*public CourseMember(){
 
-    }
+    }*/
 
     public int getId() {
         return id;

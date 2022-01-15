@@ -1,4 +1,4 @@
-package com.omega13.codecademy.controllers.progress;
+package com.omega13.codecademy.controllers.overview;
 
 import com.omega13.codecademy.database.CourseData;
 import com.omega13.codecademy.database.CourseMemberData;
@@ -8,22 +8,17 @@ import com.omega13.codecademy.domain.Course;
 import com.omega13.codecademy.domain.CourseMember;
 import com.omega13.codecademy.domain.Progress;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.net.URL;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.concurrent.SynchronousQueue;
 
-public class ProgressController implements Initializable {
-    @FXML
-    Slider ProgressSlider;
+public class CourseProgressController implements Initializable {
     @FXML
     TableView<CourseMember> MemberTable;
     @FXML
@@ -39,17 +34,18 @@ public class ProgressController implements Initializable {
     @FXML
     TableColumn<com.omega13.codecademy.domain.Module, String> ModuleColumn;
 
+    @FXML
+    Label percentageLabel;
+
     CourseMemberData courseMemberData = new CourseMemberData();
     CourseData courseData = new CourseData();
     ModuleData moduleData = new ModuleData();
     ProgressData progressData = new ProgressData();
 
+    Progress progress;
+    int moduleId;
     int memberId;
     int courseId;
-    int moduleId;
-    int contentId;
-    Progress progress;
-    int id;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,8 +66,6 @@ public class ProgressController implements Initializable {
             this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getId()).getTitle()));
             CourseTable.getItems().setAll(courseData.getCoursesPerMember(memberId));
             CourseTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getModules());
-            //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getId()).getTitle()));
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember((memberId)));
         }
 
     }
@@ -80,55 +74,33 @@ public class ProgressController implements Initializable {
         if(CourseTable.isPressed()){
             courseId = CourseTable.getSelectionModel().getSelectedItem().getId();
             this.ModuleColumn.setCellValueFactory(data -> new SimpleStringProperty(this.moduleData.getModule(data.getValue().getId()).getTitle()));
-            //System.out.println(moduleData.getModulesPerCourse(courseId));
             ModuleTable.getItems().setAll(moduleData.getModulesPerCourse(courseId));
             ModuleTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getProgress());
 
-
-            /*int courseId = CourseTable.getSelectionModel().getSelectedItem().getId();
-            this.ModuleColumn.setCellValueFactory(data -> new SimpleStringProperty(this.moduleData.getModule(data.getValue().).getTitle()));
-            //this.ModuleColumn.setCellValueFactory(data -> new SimpleStringProperty(this.moduleData.getModule(data.getValue().getId()).getTitle()));
-            ModuleTable.getItems().setAll((Module) progressData.getModules(courseId));*/
         }
 
     }
 
-    private void getProgress() {
+    private void getProgress(){
         if(ModuleTable.isPressed()){
+
             moduleId = ModuleTable.getSelectionModel().getSelectedItem().getId();
             //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.progressData.getProgress(data.getValue().getId()).toString());
-            
-            progress = this.progressData.getProgress(moduleId, memberId);
 
+            System.out.println(moduleId );
+            System.out.println(memberId);
+            progress = this.progressData.getProgress(moduleId, memberId);
+            /*
+            percentageLabel.setText("Deze module is voor " + progress.getPercentage() + "% af");
 
             if(progress != null) {
-                //System.out.println(progress.getPercentage());
-                id = progress.getId();
-                contentId = progress.getContentID();
-                ProgressSlider.adjustValue(progress.getPercentage());
-
+                percentageLabel.setText("Deze module is voor 0% af");
             }
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember(moduleId));
-            //CourseTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getModules());
-            //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getId()).getTitle()));
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember((memberId)));
+
+             */
+
+
+            //System.out.println(progress.getPercentage());
         }
-
-    }
-
-    @FXML
-    public void saveProgress(ActionEvent e){
-        System.out.println("hoi");
-        System.out.println(memberId);
-        progressData.addProgress((int)ProgressSlider.getValue(), memberId, contentId, moduleId);
-        progressData.addCertitifcate(courseId, memberId, moduleId);
-        //CourseMembers.refresh();
-    }
-
-    @FXML
-    public void onSliderChanged(){
-        int sliderValue = (int) ProgressSlider.getValue();
-
-        System.out.println(sliderValue);
     }
 }

@@ -1,7 +1,6 @@
 package com.omega13.codecademy.database;
 
 import com.omega13.codecademy.domain.Module;
-import com.omega13.codecademy.domain.Enums.Level;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -67,5 +66,79 @@ public class ModuleData {
 
 
 
+    }
+
+    public List<com.omega13.codecademy.domain.Module> getModulesPerCourse(int courseId){
+        ArrayList<com.omega13.codecademy.domain.Module> Modules = new ArrayList<>();
+        //ArrayList<CourseMember> courseMembers = new ArrayList<>();
+
+        int id;
+        String title;
+        ResultSet rs;
+
+        try{
+            String query = "" +
+                    "SELECT Module.ID, Module.Titel FROM Module " +
+                    "INNER JOIN Blabla ON Module.ID = Blabla.ModuleID " +
+                    "INNER JOIN Cursus ON Blabla.CursusID = Cursus.ID " +
+                    "AND Cursus.ID = " + courseId;
+
+
+
+
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            rs = preparedStmt.executeQuery();
+
+            while(rs.next()){
+                id = rs.getInt(1);
+                title = rs.getString(2);        // Retrieve the first column value
+
+                Modules.add(new com.omega13.codecademy.domain.Module(id, title));
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return Modules;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public com.omega13.codecademy.domain.Module getModule(int moduleId){
+        com.omega13.codecademy.domain.Module module = null;
+        int id;
+        String title;
+
+        ResultSet rs;
+
+        try {
+            String query = " select * from Module WHERE id = " + moduleId;
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+            // execute the preparedstatement
+            rs = preparedStmt.executeQuery();
+
+
+            while (rs.next()) {               // Position the cursor                  4
+                id = rs.getInt(1);
+                title = rs.getString(2);        // Retrieve the first column value
+
+
+                module = new com.omega13.codecademy.domain.Module(id, title);
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return module;
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
     }
 }

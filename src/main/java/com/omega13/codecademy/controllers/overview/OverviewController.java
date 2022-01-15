@@ -51,7 +51,7 @@ public class OverviewController {
 
     @FXML
     private void onCourseProgressClick() throws IOException {
-        //this.sceneController.sceneSwitcher("overview/coursecertificate-view.fxml", btn_courseCertificate);
+        this.sceneController.sceneSwitcher("overview/courseprogress-view.fxml", btn_courseCertificate);
     }
 
     @FXML
