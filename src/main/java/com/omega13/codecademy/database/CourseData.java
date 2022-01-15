@@ -192,7 +192,7 @@ public class CourseData {
                 PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
                 preparedStmt2.setInt (1, module.getId());
                 preparedStmt2.setInt (2, CursusID);
-                preparedStmt2.setInt (3, modules.indexOf(module));
+                preparedStmt2.setInt (3, modules.indexOf(module) +1);
 
 
 
@@ -210,6 +210,80 @@ public class CourseData {
         } finally {
 
         }
+    }
+
+    public void deleteCourse(int id) {
+
+        try {
+            String query = " delete from Cursus WHERE ID =?";
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt (1, id);
+
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+
+    }
+
+
+    public void updateCourse(int id, String name, String subject, String introtext, Level level, ArrayList<Module> modules) {
+
+        try {
+            String query = " update Cursus set Naam =?, Onderwerp =?, Introductietekst =?, Niveau =? WHERE ID =?";
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStmt.setString (1, name);
+            preparedStmt.setString (2, subject);
+            preparedStmt.setString (3, introtext);
+            preparedStmt.setString (4, String.valueOf(level));
+            preparedStmt.setInt(5, id);
+
+
+            // execute the preparedstatement
+            preparedStmt.executeUpdate();
+
+
+            String queryDelete = " delete from Blabla WHERE CursusID =?";
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmtDelete = conn.prepareStatement(queryDelete);
+            preparedStmtDelete.setInt (1, id);
+
+
+            // execute the preparedstatement
+            preparedStmtDelete.execute();
+
+            for (Module module: modules) {
+                String query2 = " insert into Blabla (ModuleID, CursusID, Volgnummer)"
+                        + " values (?, ?, ?)";
+
+                // create the mysql insert preparedstatement
+                PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
+                preparedStmt2.setInt (1, module.getId());
+                preparedStmt2.setInt (2, id);
+                preparedStmt2.setInt (3, modules.indexOf(module) + 1);
+
+                // execute the preparedstatement
+                preparedStmt2.execute();
+            }
+
+
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+
     }
 
 }
