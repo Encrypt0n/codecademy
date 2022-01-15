@@ -76,7 +76,7 @@ public class CourseMemberData {
     }
 
     public CourseMember getCourseMember(int courseMemberId){
-        CourseMember member = new CourseMember();
+        CourseMember member = null;
         int id;
         String name;
         String email;
