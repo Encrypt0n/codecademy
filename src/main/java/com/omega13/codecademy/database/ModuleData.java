@@ -68,6 +68,41 @@ public class ModuleData {
 
     }
 
+    public List<com.omega13.codecademy.domain.Module> getAvailableModules(){
+        ArrayList<Module> Modules = new ArrayList<>();
+        int id;
+        String title;
+
+
+        ResultSet rs;
+        try {
+            String query = " select Module.ID, Module.Titel from Module LEFT JOIN Blabla ON Module.ID = Blabla.ModuleID WHERE Blabla.ModuleID IS NULL";
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+            // execute the preparedstatement
+            rs = preparedStmt.executeQuery();
+
+
+            while (rs.next()) {               // Position the cursor                  4
+                id = rs.getInt(1);
+                title = rs.getString(2);        // Retrieve the first column value
+
+                Modules.add(new Module(id, title));
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return Modules;
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+    }
+
     public List<com.omega13.codecademy.domain.Module> getModulesPerCourse(int courseId){
         ArrayList<com.omega13.codecademy.domain.Module> Modules = new ArrayList<>();
         //ArrayList<CourseMember> courseMembers = new ArrayList<>();
