@@ -19,7 +19,7 @@ public class ProgressData {
 
 
 
-    public Progress getProgress(int moduleId, int cursistId){
+    public Progress getProgressForModule(int moduleId, int cursistId){
         Progress progress = null;
         int id;
         int Percentage;
@@ -66,9 +66,54 @@ public class ProgressData {
         }
     }
 
+    public Progress getProgressForWebcast(int webcastId, int cursistId){
+        Progress progress = null;
+        int id;
+        int Percentage;
+        int CursistID;
+        int ContentID;
+        boolean gender;
+        String address;
+        String city;
+        String country;
+        ResultSet rs;
+
+        try {
+            String query = "" +
+                    "SELECT Voortgang.ID, Voortgang.Percentage, Voortgang.CursistID, Voortgang.ContentID FROM Voortgang " +
+                    "INNER JOIN Content ON Voortgang.ContentID = Content.ID " +
+                    "INNER JOIN Webcast ON Content.WebcastID = Webcast.ID " +
+                    "AND Webcast.ID = " + webcastId + "AND Voortgang.CursistID = " + cursistId;
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+            // execute the preparedstatement
+            rs = preparedStmt.executeQuery();
 
 
-    public void addProgress(int Pertentage, int CursistID, int ContentID, int ModuleID) {
+            while (rs.next()) {               // Position the cursor                  4
+                id = rs.getInt(1);
+                Percentage = rs.getInt(2);        // Retrieve the first column value
+                CursistID = rs.getInt(3);// Retrieve the first column value
+                ContentID = rs.getInt(4);
+
+                progress = new Progress(id, Percentage, CursistID, ContentID);
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return progress;
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+    }
+
+
+
+    public void addProgressForModule(int Pertentage, int CursistID, int ContentID, int ModuleID) {
         //System.out.println(ContentID);
         ResultSet rs;
 
@@ -109,6 +154,68 @@ public class ProgressData {
 
             rs.close();
             preparedStmt10.close();
+
+                String query11 = "insert into Voortgang (Percentage, CursistID, ContentID)"
+                        + " values (?, ?, ?)";
+                // create the mysql insert preparedstatement
+                PreparedStatement preparedStmt11 = conn.prepareStatement(query11);
+                preparedStmt11.setInt (1, Pertentage);
+                preparedStmt11.setInt (2, CursistID);
+                preparedStmt11.setInt (3, ContentID);
+
+                // execute the preparedstatement
+                preparedStmt11.execute();
+            }
+
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+    }
+
+    public void addProgressForWebcast(int Pertentage, int CursistID, int ContentID, int WebcastID) {
+        //System.out.println(ContentID);
+        ResultSet rs;
+
+        try {
+
+            String query9 = "update Voortgang set Percentage =? WHERE CursistID =? AND ContentID =?";
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt9 = conn.prepareStatement(query9);
+            preparedStmt9.setInt (1, Pertentage);
+            preparedStmt9.setInt (2, CursistID);
+            preparedStmt9.setInt (3, ContentID);
+            //preparedStmt9.setInt(4, id);
+
+            preparedStmt9.executeUpdate();
+            int count = preparedStmt9.getUpdateCount();
+            if(count < 1) {
+
+
+
+                String query10 =  "SELECT Content.ID FROM Content " +
+                        "INNER JOIN Webcast ON Content.WebcastID = Webcast.ID " +
+
+                        "AND Webcast.ID = " + WebcastID;
+            /*String query10 = "select Content.ID FROM Module " +
+                    "INNER JOIN Content ON Module.ID = Content.ModuleID"
+                    + "AND Module.ID = " + ModuleID;*/
+                PreparedStatement preparedStmt10 = conn.prepareStatement(query10);
+
+                // execute the preparedstatement
+                rs = preparedStmt10.executeQuery();
+
+
+                while (rs.next()) {               // Position the cursor                  4
+                    ContentID = rs.getInt(1);
+
+
+                }
+
+                rs.close();
+                preparedStmt10.close();
 
                 String query11 = "insert into Voortgang (Percentage, CursistID, ContentID)"
                         + " values (?, ?, ?)";

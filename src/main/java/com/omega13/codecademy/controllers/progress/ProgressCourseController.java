@@ -102,7 +102,7 @@ public class ProgressCourseController implements Initializable {
             moduleId = ModuleTable.getSelectionModel().getSelectedItem().getId();
             //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.progressData.getProgress(data.getValue().getId()).toString());
             
-            progress = this.progressData.getProgress(moduleId, memberId);
+            progress = this.progressData.getProgressForModule(moduleId, memberId);
 
 
             if(progress != null) {
@@ -124,7 +124,7 @@ public class ProgressCourseController implements Initializable {
     public void saveProgress(ActionEvent e){
         System.out.println("hoi");
         System.out.println(memberId);
-        progressData.addProgress((int)ProgressSlider.getValue(), memberId, contentId, moduleId);
+        progressData.addProgressForModule((int)ProgressSlider.getValue(), memberId, contentId, moduleId);
         progressData.addCertitifcate(courseId, memberId, moduleId);
         //CourseMembers.refresh();
     }
