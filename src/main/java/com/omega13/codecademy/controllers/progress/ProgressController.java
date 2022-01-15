@@ -120,7 +120,8 @@ public class ProgressController implements Initializable {
     public void saveProgress(ActionEvent e){
         System.out.println("hoi");
         System.out.println(memberId);
-        progressData.addProgress((int)ProgressSlider.getValue(), memberId, contentId, moduleId, id);
+        progressData.addProgress((int)ProgressSlider.getValue(), memberId, contentId, moduleId);
+        progressData.addCertitifcate(courseId, memberId, moduleId);
         //CourseMembers.refresh();
     }
 

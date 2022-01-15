@@ -1,9 +1,6 @@
 package com.omega13.codecademy.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +19,7 @@ public class ProgressData {
 
 
 
-    public Progress getProgress(int moduleId, int memberId){
+    public Progress getProgress(int moduleId, int cursistId){
         Progress progress = null;
         int id;
         int Percentage;
@@ -36,10 +33,12 @@ public class ProgressData {
 
         try {
             String query = "" +
-                    "SELECT Voortgang.ID, Voortgang.Percentage, Voortgang.CursistID, Voortgang.ContentID FROM Voortgang " +
+                    "SELECT Voortgang.ID, Voortgang.Percentage, Voortgang.CursistID, Voortgang.ContentID, Inschrijving.Actief FROM Voortgang " +
                     "INNER JOIN Content ON Voortgang.ContentID = Content.ID " +
                     "INNER JOIN Module ON Content.ModuleID = Module.ID " +
-                    "AND Module.ID = " + moduleId + "AND Voortgang.CursistID = " + memberId + "AND Cursist.ID = " + memberId + "AND Inschrijving.CursistID = " + memberId + "AND Inschrijving.Actief = true";
+                    "INNER JOIN Cursist ON Voortgang.CursistID = Cursist.ID " +
+                    "INNER JOIN Inschrijving ON Cursist.ID = Inschrijving.CursistID " +
+                    "AND Module.ID = " + moduleId + "AND Voortgang.CursistID = " + cursistId + "AND Cursist.ID = " + cursistId + "AND Inschrijving.CursistID = " + cursistId + "AND Inschrijving.Actief = " + 1;
 
             PreparedStatement preparedStmt = conn.prepareStatement(query);
 
@@ -69,22 +68,23 @@ public class ProgressData {
 
 
 
-    public void addProgress(int Pertentage, int CursistID, int ContentID, int ModuleID, int id) {
+    public void addProgress(int Pertentage, int CursistID, int ContentID, int ModuleID) {
         //System.out.println(ContentID);
         ResultSet rs;
 
         try {
 
-            String query9 = "update Voortgang set Percentage =? WHERE CursistID =? AND ContentID =? AND ID =?";
+            String query9 = "update Voortgang set Percentage =? WHERE CursistID =? AND ContentID =?";
             // create the mysql insert preparedstatement
             PreparedStatement preparedStmt9 = conn.prepareStatement(query9);
             preparedStmt9.setInt (1, Pertentage);
             preparedStmt9.setInt (2, CursistID);
             preparedStmt9.setInt (3, ContentID);
-            preparedStmt9.setInt(4, id);
+            //preparedStmt9.setInt(4, id);
 
-            int count = preparedStmt9.executeUpdate();
-            if(count > 0) {
+            preparedStmt9.executeUpdate();
+            int count = preparedStmt9.getUpdateCount();
+            if(count < 1) {
 
 
 
@@ -128,5 +128,91 @@ public class ProgressData {
         } finally {
 
         }
+    }
+
+    public void addCertitifcate(int CursusID, int CursistID, int ModuleID) {
+
+        ResultSet rs;
+        int amountScored = 0;
+        int amountModules = 0;
+
+        try {
+
+        String query10 =  "SELECT Count(Module.ID) FROM Voortgang " +
+                "INNER JOIN Content ON Voortgang.ContentID = Content.ID " +
+                "INNER JOIN Cursist ON Voortgang.CursistID = Cursist.ID " +
+                "INNER JOIN Module ON Content.ModuleID = Module.ID " +
+                "INNER JOIN Blabla ON Module.ID = Blabla.ModuleID " +
+                "INNER JOIN Cursus ON Blabla.CursusID = Cursus.ID " +
+
+                "AND Module.ID = " + ModuleID + "AND Cursus.ID = " + CursusID + "AND Cursist.ID = " + CursistID + "AND Voortgang.Percentage = " + 100;
+
+        PreparedStatement preparedStmt10 = conn.prepareStatement(query10);
+
+        rs = preparedStmt10.executeQuery();
+
+
+
+        while(rs.next()){
+            amountScored = Integer.parseInt(rs.getString(1));
+        }
+
+
+
+        String query11 =  "SELECT COUNT(Module.ID) FROM Cursus " +
+                "INNER JOIN Blabla ON Cursus.ID = Blabla.CursusID " +
+                "INNER JOIN Module ON Blabla.ModuleID = Module.ID " +
+                "AND Cursus.ID = " + CursusID;
+
+        PreparedStatement preparedStmt11 = conn.prepareStatement(query11);
+
+        // execute the preparedstatement
+        rs = preparedStmt11.executeQuery();
+
+
+
+        while(rs.next()){
+            amountModules = Integer.parseInt(rs.getString(1));
+        }
+
+        rs.close();
+        preparedStmt11.close();
+
+        if(amountScored == amountModules) {
+            String query12 = "insert into Certificaat (Beoordeling, NaamMedewerker)"
+                    + " values (?, ?)";
+            PreparedStatement preparedStmt12 = conn.prepareStatement(query12, Statement.RETURN_GENERATED_KEYS);
+            preparedStmt12.setInt (1, 10);
+            preparedStmt12.setString (2, "Rogier van der Gaag");
+
+
+            preparedStmt12.execute();
+
+            ResultSet rs2 = preparedStmt12.getGeneratedKeys();
+            int CertificaatID = 0;
+            if (rs2.next()) {
+                CertificaatID = rs2.getInt(1);
+                System.out.println(CertificaatID); // display inserted record
+            }
+
+            String query13 = "update Inschrijving set CertificaatID =?, Actief =? WHERE CursistID =? AND Actief = " + 1;
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt13 = conn.prepareStatement(query13);
+            preparedStmt13.setInt (1, CertificaatID);
+            preparedStmt13.setInt (2, 0);
+            preparedStmt13.setInt(3, CursistID);
+
+            preparedStmt13.executeUpdate();
+
+        }
+
+
+
+    } catch (SQLException e) {
+        throw new Error("Problem", e);
+    } finally {
+
+    }
+
     }
 }
