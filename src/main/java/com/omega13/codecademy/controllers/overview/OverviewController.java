@@ -46,7 +46,7 @@ public class OverviewController {
 
     @FXML
     private void onAvgProgressClick() throws IOException {
-        //this.sceneController.sceneSwitcher("overview/coursecertificate-view.fxml", btn_courseCertificate);
+        this.sceneController.sceneSwitcher("overview/avgprogress-view.fxml", btn_avgProgress);
     }
 
     @FXML

@@ -111,6 +111,48 @@ public class ProgressData {
         }
     }
 
+    public int getAvarageForModule(int moduleId){
+        Progress progress = null;
+        int id;
+        int Percentage = 0;
+        int CursistID;
+        int ContentID;
+        boolean gender;
+        String address;
+        String city;
+        String country;
+        ResultSet rs;
+
+        try {
+            String query = "" +
+                    "SELECT AVG(Voortgang.Percentage) FROM Voortgang INNER JOIN Content ON Voortgang.ContentID = Content.ID INNER JOIN Module ON Content.ModuleID = Module.ID AND Module.ID = " + moduleId;
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+            // execute the preparedstatement
+            rs = preparedStmt.executeQuery();
+
+
+            while (rs.next()) {               // Position the cursor                  4
+
+                Percentage = rs.getInt(1);        // Retrieve the first column value
+
+
+                //progress = new Progress(null, Percentage, null, null);
+            }
+
+            rs.close();
+            preparedStmt.close();
+            return Percentage;
+
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        } finally {
+
+        }
+    }
+
+
 
 
     public void addProgressForModule(int Pertentage, int CursistID, int ContentID, int ModuleID) {
