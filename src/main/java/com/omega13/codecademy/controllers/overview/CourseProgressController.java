@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/*
+    The class CourseProgressController is in connection with courseprogress-view.fxml, this class is responsible for the interactions with the user
+ */
 public class CourseProgressController implements Initializable {
     @FXML
     TableView<CourseMember> MemberTable;
@@ -49,6 +52,7 @@ public class CourseProgressController implements Initializable {
     int memberId;
     int courseId;
 
+    //loads after the constructor but before the page is loaded and fills the table
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -56,12 +60,14 @@ public class CourseProgressController implements Initializable {
 
     }
 
+    //Fills the table with course members
     private void fillMemberList(){
         MemberColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseMemberData.getCourseMember(data.getValue().getId()).getName()));
         MemberTable.getItems().setAll(courseMemberData.getCourseMembers());
         MemberTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getCourses());
     }
 
+    //gets the selected course and fills another table
     private void getCourses() {
         if(MemberTable.isPressed()){
             memberId = MemberTable.getSelectionModel().getSelectedItem().getId();
@@ -72,6 +78,7 @@ public class CourseProgressController implements Initializable {
 
     }
 
+    //Gets the selected module and fills another table
     private void getModules() {
         if(CourseTable.isPressed()){
             courseId = CourseTable.getSelectionModel().getSelectedItem().getId();
@@ -83,13 +90,12 @@ public class CourseProgressController implements Initializable {
 
     }
 
+    //Sets the text to the percentage of the module
     private void getProgress(){
         if(ModuleTable.isPressed()){
 
             moduleId = ModuleTable.getSelectionModel().getSelectedItem().getId();
 
-            System.out.println(moduleId );
-            System.out.println(memberId);
             progress = this.progressData.getProgressForModule(moduleId, memberId);
 
             percentageLabel.setText("Deze module is voor " + progress.getPercentage() + "% af");
@@ -100,6 +106,7 @@ public class CourseProgressController implements Initializable {
         }
     }
 
+    //Returns use to the previous page
     @FXML
     private void onReturnClick() throws IOException {
         sceneController.sceneSwitcher("overview/overview-view.fxml", btn_return);

@@ -11,16 +11,16 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+
+/*
+    This class handles the table "Webcast" inside the database
+ */
 public class WebcastData {
-
-
-
-    Calendar calendar = Calendar.getInstance();
-
     DatabaseConnection connection = new DatabaseConnection();
 
     Connection conn = connection.makeConnection();
 
+    //Gets all the webcasts from the database
     public List<Webcast> getWebcasts() {
         ArrayList<Webcast> Webcasts = new ArrayList<>();
         int id;
@@ -30,29 +30,14 @@ public class WebcastData {
         ResultSet rs;
         try {
             String query = " select * from Webcast";
-
-
-
-
-            // create the mysql insert preparedstatement
             PreparedStatement preparedStmt = conn.prepareStatement(query);
-            /*preparedStmt.setString (1, name);
-            preparedStmt.setString (2, email);
-            preparedStmt.setDate   (3, birthday);
-            preparedStmt.setBoolean(4, false);
-            preparedStmt.setString (5, address);
-            preparedStmt.setString (6, city);
-            preparedStmt.setString (7, country);*/
 
-            // execute the preparedstatement
             rs = preparedStmt.executeQuery();
 
 
-            while (rs.next()) {               // Position the cursor                  4
+            while (rs.next()) {
                 id = rs.getInt(1);
-                title = rs.getString(2);        // Retrieve the first column value
-
-
+                title = rs.getString(2);
 
                 Webcasts.add(new Webcast(id, title));
             }
@@ -71,9 +56,9 @@ public class WebcastData {
 
     }
 
+    //Gets all the webcast from the database that belong to a course member
     public List<Webcast> getWebcastPerMember(int memberId){
         ArrayList<Webcast> Webcasts = new ArrayList<>();
-        //ArrayList<CourseMember> courseMembers = new ArrayList<>();
 
         int id;
         String title;
@@ -87,15 +72,12 @@ public class WebcastData {
                     "AND Voortgang.CursistID = " + memberId;
 
 
-
-
-
             PreparedStatement preparedStmt = conn.prepareStatement(query);
             rs = preparedStmt.executeQuery();
 
             while(rs.next()){
                 id = rs.getInt(1);
-                title = rs.getString(2);        // Retrieve the first column value
+                title = rs.getString(2);
 
                 Webcasts.add(new Webcast(id, title));
             }
@@ -110,6 +92,7 @@ public class WebcastData {
         return null;
     }
 
+    //Gets the webcast by webcastId
     public Webcast getWebcast(int webcastId){
         Webcast webcast = null;
         int id;
@@ -119,17 +102,12 @@ public class WebcastData {
 
         try {
             String query = " select * from Webcast WHERE id = " + webcastId;
-
             PreparedStatement preparedStmt = conn.prepareStatement(query);
-
-            // execute the preparedstatement
             rs = preparedStmt.executeQuery();
 
-
-            while (rs.next()) {               // Position the cursor                  4
+            while (rs.next()) {
                 id = rs.getInt(1);
-                title = rs.getString(2);        // Retrieve the first column value
-
+                title = rs.getString(2);
 
                 webcast = new Webcast(id, title);
             }
@@ -145,9 +123,9 @@ public class WebcastData {
         }
     }
 
+    //Gets the top 3 webcasts
     public List<Webcast> TopWebcasts() {
         List<Webcast> Webcasts = new ArrayList<>();
-        List<Integer> top3 = new ArrayList<>();
 
         int id = 0;
         String title;
@@ -170,23 +148,12 @@ public class WebcastData {
                 title = rs.getString(2);
 
                 Webcasts.add(new Webcast(id, title));
-                //System.out.println(contentIDs);
-
-
-
-
-
             }
 
             rs.close();
             preparedStmt10.close();
-            //return amountWebcasts;
-
-
-
 
             return Webcasts;
-
 
         } catch (SQLException e) {
             throw new Error("Problem", e);

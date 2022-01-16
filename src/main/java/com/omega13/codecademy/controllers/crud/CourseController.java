@@ -4,30 +4,26 @@ import com.omega13.codecademy.controllers.SceneController;
 import com.omega13.codecademy.database.CourseData;
 import com.omega13.codecademy.database.ModuleData;
 import com.omega13.codecademy.domain.Course;
-import com.omega13.codecademy.domain.CourseMember;
 import com.omega13.codecademy.domain.Enums.Level;
 import com.omega13.codecademy.domain.Module;
-import com.omega13.codecademy.validation.Validation;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+/*
+    The class CourseController is in connection with course-view.fxml, this class is responsible for the interactions with the user and the CRUD
+ */
 public class CourseController implements Initializable {
-
     @FXML
     TextField newName;
     @FXML
@@ -69,6 +65,7 @@ public class CourseController implements Initializable {
     private SceneController sceneController = new SceneController();
     ArrayList<Module> modules = new ArrayList<>();
 
+    //loads after the constructor but before the page is loaded and fills the tables and dropdown
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fillCourseTable();
@@ -76,12 +73,14 @@ public class CourseController implements Initializable {
         fillLevel();
     }
 
+    //Adds a selected module to an arraylist
     public void addModule() {
         if(modules.contains(selectedModule)) return;
         modules.add(selectedModule);
         Modules.getItems().add(selectedModule);
     }
 
+    //Fills the table with all the courses
     private void fillCourseTable(){
         CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTitle()));
         ModuleColumn.setCellValueFactory(data -> new SimpleStringProperty(moduleData.getModulesPerCourse(data.getValue().getId()).size() + ""));
@@ -95,6 +94,7 @@ public class CourseController implements Initializable {
     }
 
 
+    //Fills the dropdown with all the modules
     public void fillModules() {
         ObservableList<Module> modules = FXCollections.observableArrayList();
         modules.addAll(this.moduleData.getAvailableModules());
@@ -108,6 +108,7 @@ public class CourseController implements Initializable {
         });
     }
 
+    //Fills the dropdown with all the enum "Level"
     public void fillLevel() {
         ObservableList<Level> levels = FXCollections.observableArrayList();
 
@@ -122,6 +123,7 @@ public class CourseController implements Initializable {
         });
     }
 
+    //If clicked on a course inside the table, fills the selected course and sets the input values to the course information
     private void setCourseData(){
         if(CourseTable.isPressed()){
             modules.clear();
@@ -135,6 +137,7 @@ public class CourseController implements Initializable {
         }
     }
 
+    //Adds course to database
     @FXML
     public void addCourse(ActionEvent e){
         if(modules.size() == 0) return;
@@ -143,6 +146,7 @@ public class CourseController implements Initializable {
         //Courses.refresh();
     }
 
+    //Delete course from database
     public void deleteCourse(ActionEvent e){
         System.out.println(selectedCourse.getId());
         courseData.deleteCourse(selectedCourse.getId());
@@ -151,12 +155,14 @@ public class CourseController implements Initializable {
     }
 
 
+    //Updates course from database
     public void updateCourse(ActionEvent e) {
         courseData.updateCourse(selectedCourse.getId(), newName.getText(), newSubject.getText(), newIntrotext.getText(), selectedLevel, modules);
         CourseTable.getItems().setAll(courseData.getCourses());
         fillModules();
     }
 
+    //Returns the user the the previous page
     @FXML
     private void onReturnClick() throws IOException {
         sceneController.sceneSwitcher("crud/CRUD-view.fxml", btn_return);

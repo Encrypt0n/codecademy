@@ -11,6 +11,9 @@ import com.omega13.codecademy.domain.Enrollment;
 import com.omega13.codecademy.domain.Enums.Level;
 import com.omega13.codecademy.domain.Progress;
 
+/*
+    This class handles the table "Voortgang" inside the database
+ */
 public class ProgressData {
 
     DatabaseConnection connection = new DatabaseConnection();
@@ -19,16 +22,13 @@ public class ProgressData {
 
 
 
+    //Gets the progress that belongs to the module and course member by the given moduleId
     public Progress getProgressForModule(int moduleId, int cursistId){
         Progress progress = null;
         int id;
         int Percentage;
         int CursistID;
         int ContentID;
-        boolean gender;
-        String address;
-        String city;
-        String country;
         ResultSet rs;
 
         try {
@@ -42,14 +42,13 @@ public class ProgressData {
 
             PreparedStatement preparedStmt = conn.prepareStatement(query);
 
-            // execute the preparedstatement
             rs = preparedStmt.executeQuery();
 
 
-            while (rs.next()) {               // Position the cursor                  4
+            while (rs.next()) {
                 id = rs.getInt(1);
-                Percentage = rs.getInt(2);        // Retrieve the first column value
-                CursistID = rs.getInt(3);// Retrieve the first column value
+                Percentage = rs.getInt(2);
+                CursistID = rs.getInt(3);
                 ContentID = rs.getInt(4);
 
                 progress = new Progress(id, Percentage, CursistID, ContentID);
@@ -66,16 +65,13 @@ public class ProgressData {
         }
     }
 
+    //Gets the progress that belongs to the webcast
     public Progress getProgressForWebcast(int webcastId, int cursistId){
         Progress progress = null;
         int id;
         int Percentage;
         int CursistID;
         int ContentID;
-        boolean gender;
-        String address;
-        String city;
-        String country;
         ResultSet rs;
 
         try {
@@ -87,14 +83,13 @@ public class ProgressData {
 
             PreparedStatement preparedStmt = conn.prepareStatement(query);
 
-            // execute the preparedstatement
             rs = preparedStmt.executeQuery();
 
 
-            while (rs.next()) {               // Position the cursor                  4
+            while (rs.next()) {
                 id = rs.getInt(1);
-                Percentage = rs.getInt(2);        // Retrieve the first column value
-                CursistID = rs.getInt(3);// Retrieve the first column value
+                Percentage = rs.getInt(2);
+                CursistID = rs.getInt(3);
                 ContentID = rs.getInt(4);
 
                 progress = new Progress(id, Percentage, CursistID, ContentID);
@@ -111,16 +106,10 @@ public class ProgressData {
         }
     }
 
-    public int getAvarageForModule(int moduleId){
+    //Gets the average progress from the modules
+    public int getAverageForModule(int moduleId){
         Progress progress = null;
-        int id;
         int Percentage = 0;
-        int CursistID;
-        int ContentID;
-        boolean gender;
-        String address;
-        String city;
-        String country;
         ResultSet rs;
 
         try {
@@ -129,16 +118,13 @@ public class ProgressData {
 
             PreparedStatement preparedStmt = conn.prepareStatement(query);
 
-            // execute the preparedstatement
             rs = preparedStmt.executeQuery();
 
 
-            while (rs.next()) {               // Position the cursor                  4
+            while (rs.next()) {
 
-                Percentage = rs.getInt(1);        // Retrieve the first column value
+                Percentage = rs.getInt(1);
 
-
-                //progress = new Progress(null, Percentage, null, null);
             }
 
             rs.close();
@@ -154,20 +140,17 @@ public class ProgressData {
 
 
 
-
+    //Adds the progress for the module
     public void addProgressForModule(int Pertentage, int CursistID, int ContentID, int ModuleID) {
-        //System.out.println(ContentID);
         ResultSet rs;
 
         try {
 
             String query9 = "update Voortgang set Percentage =? WHERE CursistID =? AND ContentID =?";
-            // create the mysql insert preparedstatement
             PreparedStatement preparedStmt9 = conn.prepareStatement(query9);
             preparedStmt9.setInt (1, Pertentage);
             preparedStmt9.setInt (2, CursistID);
             preparedStmt9.setInt (3, ContentID);
-            //preparedStmt9.setInt(4, id);
 
             preparedStmt9.executeUpdate();
             int count = preparedStmt9.getUpdateCount();
@@ -179,19 +162,12 @@ public class ProgressData {
                     "INNER JOIN Module ON Content.ModuleID = Module.ID " +
 
                     "AND Module.ID = " + ModuleID;
-            /*String query10 = "select Content.ID FROM Module " +
-                    "INNER JOIN Content ON Module.ID = Content.ModuleID"
-                    + "AND Module.ID = " + ModuleID;*/
             PreparedStatement preparedStmt10 = conn.prepareStatement(query10);
 
-            // execute the preparedstatement
             rs = preparedStmt10.executeQuery();
 
-
-            while (rs.next()) {               // Position the cursor                  4
+            while (rs.next()) {
                 ContentID = rs.getInt(1);
-
-
             }
 
             rs.close();
@@ -199,13 +175,11 @@ public class ProgressData {
 
                 String query11 = "insert into Voortgang (Percentage, CursistID, ContentID)"
                         + " values (?, ?, ?)";
-                // create the mysql insert preparedstatement
                 PreparedStatement preparedStmt11 = conn.prepareStatement(query11);
                 preparedStmt11.setInt (1, Pertentage);
                 preparedStmt11.setInt (2, CursistID);
                 preparedStmt11.setInt (3, ContentID);
 
-                // execute the preparedstatement
                 preparedStmt11.execute();
             }
 
@@ -217,40 +191,31 @@ public class ProgressData {
         }
     }
 
+    //Adds the progress for webcast
     public void addProgressForWebcast(int Pertentage, int CursistID, int ContentID, int WebcastID) {
         //System.out.println(ContentID);
         ResultSet rs;
 
         try {
-
             String query9 = "update Voortgang set Percentage =? WHERE CursistID =? AND ContentID =?";
-            // create the mysql insert preparedstatement
             PreparedStatement preparedStmt9 = conn.prepareStatement(query9);
             preparedStmt9.setInt (1, Pertentage);
             preparedStmt9.setInt (2, CursistID);
             preparedStmt9.setInt (3, ContentID);
-            //preparedStmt9.setInt(4, id);
 
             preparedStmt9.executeUpdate();
             int count = preparedStmt9.getUpdateCount();
             if(count < 1) {
 
-
-
                 String query10 =  "SELECT Content.ID FROM Content " +
                         "INNER JOIN Webcast ON Content.WebcastID = Webcast.ID " +
 
                         "AND Webcast.ID = " + WebcastID;
-            /*String query10 = "select Content.ID FROM Module " +
-                    "INNER JOIN Content ON Module.ID = Content.ModuleID"
-                    + "AND Module.ID = " + ModuleID;*/
                 PreparedStatement preparedStmt10 = conn.prepareStatement(query10);
-
-                // execute the preparedstatement
                 rs = preparedStmt10.executeQuery();
 
 
-                while (rs.next()) {               // Position the cursor                  4
+                while (rs.next()) {
                     ContentID = rs.getInt(1);
 
 
@@ -261,13 +226,13 @@ public class ProgressData {
 
                 String query11 = "insert into Voortgang (Percentage, CursistID, ContentID)"
                         + " values (?, ?, ?)";
-                // create the mysql insert preparedstatement
+
                 PreparedStatement preparedStmt11 = conn.prepareStatement(query11);
                 preparedStmt11.setInt (1, Pertentage);
                 preparedStmt11.setInt (2, CursistID);
                 preparedStmt11.setInt (3, ContentID);
 
-                // execute the preparedstatement
+
                 preparedStmt11.execute();
             }
 
@@ -279,7 +244,8 @@ public class ProgressData {
         }
     }
 
-    public void addCertitifcate(int CursusID, int CursistID, int ModuleID) {
+    //Adds a certificate to the database
+    public void addCertificate(int CursusID, int CursistID, int ModuleID) {
 
         ResultSet rs;
         int amountScored = 0;
@@ -315,7 +281,6 @@ public class ProgressData {
 
         PreparedStatement preparedStmt11 = conn.prepareStatement(query11);
 
-        // execute the preparedstatement
         rs = preparedStmt11.executeQuery();
 
 

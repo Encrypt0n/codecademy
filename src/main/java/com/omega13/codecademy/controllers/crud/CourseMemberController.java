@@ -1,7 +1,6 @@
 package com.omega13.codecademy.controllers.crud;
 
 
-import com.omega13.codecademy.Home;
 import com.omega13.codecademy.controllers.SceneController;
 import com.omega13.codecademy.database.CourseMemberData;
 import com.omega13.codecademy.domain.CourseMember;
@@ -9,19 +8,19 @@ import com.omega13.codecademy.validation.Validation;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
 
+
+/*
+    The class CourseMemberController is in connection with coursemember-view.fxml, this class is responsible for the interactions with the user and the CRUD
+ */
 public class CourseMemberController implements Initializable {
-    //TABLE DATA
     @FXML
     TableView<CourseMember> CourseMembers;
 
@@ -40,7 +39,6 @@ public class CourseMemberController implements Initializable {
     @FXML
     TableColumn<CourseMember, String> Country;
 
-    //NEW TABLE DATA
     @FXML
     TextField newName;
     @FXML
@@ -70,12 +68,14 @@ public class CourseMemberController implements Initializable {
     private SceneController sceneController;
     private Validation validation;
 
+    //Constructor
     public CourseMemberController(){
         this.memberData = new CourseMemberData();
         this.sceneController = new SceneController();
         this.validation = new Validation();
     }
 
+    //loads after the constructor but before the page is loaded and fills the table
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Name.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
@@ -106,6 +106,8 @@ public class CourseMemberController implements Initializable {
     }
 
 
+
+    //If clicked on a member inside the table, fills the selected member and sets the input values to the member information
     @FXML
     public void setMemberData() {
         if(CourseMembers.isPressed()) {
@@ -122,6 +124,7 @@ public class CourseMemberController implements Initializable {
         }
     }
 
+    //Adds course member to databse
     @FXML
     public void addCourseMember(ActionEvent e){
         if(!this.validation.EmailValidation(newEmail.getText()) || !this.validation.DateValidation(newBirthday.getValue())) return;
@@ -129,18 +132,21 @@ public class CourseMemberController implements Initializable {
         CourseMembers.getItems().setAll(memberData.getCourseMembers());
     }
 
+    //Removes course member from database
     @FXML
     public void deleteCourseMember(ActionEvent e){
         memberData.deleteCourseMember(id);
         CourseMembers.getItems().setAll(memberData.getCourseMembers());
     }
 
+    //Update course member from database
     public void updateCourseMember(ActionEvent e){
         //System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
         memberData.updateCourseMember(id, newName.getText(), newEmail.getText(), java.sql.Date.valueOf(newBirthday.getValue()), true, newAddress.getText(), newCity.getText(), newCountry.getText());
         CourseMembers.refresh();
     }
 
+    //Return uses to previous page
     @FXML
     public void returnHome(ActionEvent e) throws IOException {
         sceneController.sceneSwitcher("crud/CRUD-view.fxml", btn_return);

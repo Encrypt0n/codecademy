@@ -3,7 +3,6 @@ package com.omega13.codecademy.controllers.overview;
 import com.omega13.codecademy.controllers.SceneController;
 import com.omega13.codecademy.database.*;
 import com.omega13.codecademy.domain.Course;
-import com.omega13.codecademy.domain.Progress;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,9 +13,11 @@ import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.Buffer;
 import java.util.ResourceBundle;
 
+/*
+    The class AvgProgressController is in connection with avgprogress-view.fxml, this class is responsible for the interactions with the user
+ */
 public class AvgProgressController implements Initializable {
 
     @FXML
@@ -44,12 +45,14 @@ public class AvgProgressController implements Initializable {
 
     int courseId;
     int moduleId;
-    int avarage;
+    int average;
 
+    //Constructor
     public AvgProgressController(){
         this.sceneController = new SceneController();
     }
 
+    //loads after the constructor but before the page is loaded and fills the table
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -57,18 +60,14 @@ public class AvgProgressController implements Initializable {
 
     }
 
+    //Fills the table with courses
     private void fillCourseList() {
-
-
             CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getId()).getTitle()));
             CourseTable.getItems().setAll(courseData.getCourses());
             CourseTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getModules());
-            //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getId()).getTitle()));
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember((memberId)));
-
-
     }
 
+    //Gets the selected module when clicked on one
     public void getModules() {
 
         if(CourseTable.isPressed()){
@@ -81,6 +80,7 @@ public class AvgProgressController implements Initializable {
         }
     }
 
+    //Gets the selected module when clicked on one and changes the text value with the average percentage
     public void getAvarageProgress() {
 
         if(ModuleTable.isPressed()){
@@ -88,11 +88,11 @@ public class AvgProgressController implements Initializable {
             System.out.println(moduleId);
             //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.progressData.getProgress(data.getValue().getId()).toString());
 
-            avarage = this.progressData.getAvarageForModule(moduleId);
+            average = this.progressData.getAverageForModule(moduleId);
 
 
-            if(avarage != 0) {
-                avgPercentage.setText("Deze module is gemiddled " + avarage + "% afgerond");
+            if(average != 0) {
+                avgPercentage.setText("Deze module is gemiddled " + average + "% afgerond");
             }else{
                 avgPercentage.setText("Niemand is aan deze module begonnen");
             }
