@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/*
+    The class TopWebcastsController is in connection with topwebcasts-view.fxml, this class is responsible for the interactions with the user
+ */
 public class TopWebcastsController implements Initializable {
     @FXML
     Button btn_return;
@@ -26,10 +29,12 @@ public class TopWebcastsController implements Initializable {
 
     WebcastData webcastData = new WebcastData();
 
+    //Constructor
     public TopWebcastsController(){
         this.sceneController = new SceneController();
     }
 
+    //loads after the constructor but before the page is loaded and gets the best webcasts
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -37,15 +42,15 @@ public class TopWebcastsController implements Initializable {
 
     }
 
+    //Sets the text of the top webcasts
     public void getTop3Webcasts() {
-        System.out.println(webcastData.TopWebcasts());
         positionOne.setText("1. " + webcastData.TopWebcasts().get(0).getTitle());
         positionTwo.setText("2. " + webcastData.TopWebcasts().get(1).getTitle());
         positionThree.setText("3. " + webcastData.TopWebcasts().get(2).getTitle());
     }
 
 
-
+    //Returns user to the previous page
     @FXML
     private void onReturnClick() throws IOException {
         sceneController.sceneSwitcher("overview/overview-view.fxml", btn_return);

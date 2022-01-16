@@ -11,10 +11,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/*
+    This class handles the table "Inschrijvingen" inside the database
+ */
 public class EnrollmentData {
     DatabaseConnection connection = new DatabaseConnection();
     Connection conn = connection.makeConnection();
 
+    //Adds an enrollment to the database
     public void addEnrollment(java.sql.Date startDate, int CursistID, int CertificaatID, int CursusID) {
 
         try {
@@ -24,9 +28,6 @@ public class EnrollmentData {
             String query7 = " insert into Inschrijving (Inschrijfdatum, CursistID, CertificaatID, CursusID)"
                     + " values (?, ?, ?, ?)";
 
-
-
-            // create the mysql insert preparedstatement
             PreparedStatement preparedStmt7 = conn.prepareStatement(query7);
             preparedStmt7.setDate (1, startDate);
             preparedStmt7.setInt (2, CursistID);
@@ -37,7 +38,6 @@ public class EnrollmentData {
             }
             preparedStmt7.setInt   (4, CursusID);
 
-            // execute the preparedstatement
             preparedStmt7.execute();
 
         } catch (SQLException e) {
@@ -46,6 +46,7 @@ public class EnrollmentData {
         }
     }
 
+    //Gets all of the enrollments from the database
     public List<Enrollment> getEnrollments() {
         ArrayList<Enrollment> enrollments = new ArrayList<>();
         int id;
@@ -65,10 +66,10 @@ public class EnrollmentData {
             rs = preparedStmt.executeQuery();
 
 
-            while (rs.next()) {               // Position the cursor                  4
+            while (rs.next()) {
                 id = rs.getInt(1);
-                registrationDate = rs.getDate(2);        // Retrieve the first column value
-                courseMemberId = rs.getInt(3);// Retrieve the first column value
+                registrationDate = rs.getDate(2);
+                courseMemberId = rs.getInt(3);
                 certificateId = rs.getInt(4);
                 courseId = rs.getInt(5);
                 active = rs.getBoolean(6);
@@ -89,6 +90,7 @@ public class EnrollmentData {
 
     }
 
+    //Updates the active status to the database
     private void updateActiveStatus(int CursistID, int CursusID){
         try{
             String updateQuery = "UPDATE Inschrijving set Inschrijving.Actief = 0 WHERE Inschrijving.CursistID = " + CursistID + " AND Inschrijving.CursusID = " + CursusID;
@@ -99,21 +101,16 @@ public class EnrollmentData {
         }
     }
 
+    //Deletes an enrollment by id
     public void deleteEnrollment(int id) {
 
         try {
             String query = " delete from Inschrijving WHERE ID =?";
 
-
-
-            // create the mysql insert preparedstatement
             PreparedStatement preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt (1, id);
 
-
-            // execute the preparedstatement
             preparedStmt.execute();
-            System.out.println("gelukt");
 
         } catch (SQLException e) {
             throw new Error("Problem", e);

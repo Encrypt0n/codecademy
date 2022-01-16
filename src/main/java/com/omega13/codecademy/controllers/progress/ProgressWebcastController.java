@@ -2,7 +2,6 @@ package com.omega13.codecademy.controllers.progress;
 
 import com.omega13.codecademy.controllers.SceneController;
 import com.omega13.codecademy.database.*;
-import com.omega13.codecademy.domain.Course;
 import com.omega13.codecademy.domain.CourseMember;
 import com.omega13.codecademy.domain.Progress;
 import com.omega13.codecademy.domain.Webcast;
@@ -17,9 +16,11 @@ import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.channels.FileChannel;
 import java.util.ResourceBundle;
 
+/*
+    The class ProgressWebcastController is in connection with progresswebcast-view.fxml, this class is responsible for the interactions with the user
+ */
 public class ProgressWebcastController implements Initializable {
     @FXML
     Button btn_return;
@@ -56,10 +57,12 @@ public class ProgressWebcastController implements Initializable {
     Progress progress;
     int id;
 
+    //Constructor
     public ProgressWebcastController(){
         this.sceneController = new SceneController();
     }
 
+    //loads after the constructor but before the page is loaded and fills the table
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -67,69 +70,55 @@ public class ProgressWebcastController implements Initializable {
 
     }
 
+    //Fills the table with course members
     private void fillMemberList(){
         MemberColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseMemberData.getCourseMember(data.getValue().getId()).getName()));
         MemberTable.getItems().setAll(courseMemberData.getCourseMembers());
         MemberTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getWebcasts());
     }
 
+    //Gets the selected course member and fill the webcast table with all the webcasts
     private void getWebcasts() {
         if(MemberTable.isPressed()){
             memberId = MemberTable.getSelectionModel().getSelectedItem().getId();
             this.WebcastColumn.setCellValueFactory(data -> new SimpleStringProperty(this.webcastData.getWebcast(data.getValue().getId()).getTitle()));
-            //System.out.println(moduleData.getModulesPerCourse(courseId));
             WebcastTable.getItems().setAll(webcastData.getWebcasts());
             WebcastTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getProgress());
-
-
-            /*int courseId = CourseTable.getSelectionModel().getSelectedItem().getId();
-            this.ModuleColumn.setCellValueFactory(data -> new SimpleStringProperty(this.moduleData.getModule(data.getValue().).getTitle()));
-            //this.ModuleColumn.setCellValueFactory(data -> new SimpleStringProperty(this.moduleData.getModule(data.getValue().getId()).getTitle()));
-            ModuleTable.getItems().setAll((Module) progressData.getModules(courseId));*/
         }
-
     }
 
+    //Gets the selected webcast and (if the progress isn't null) fills the progress bar
     private void getProgress() {
         if(WebcastTable.isPressed()){
             webcastId = WebcastTable.getSelectionModel().getSelectedItem().getId();
-            //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.progressData.getProgress(data.getValue().getId()).toString());
 
             progress = this.progressData.getProgressForWebcast(webcastId, memberId);
 
-
             if(progress != null) {
-                //System.out.println(progress.getPercentage());
                 id = progress.getId();
                 contentId = progress.getContentID();
                 ProgressSlider.adjustValue(progress.getPercentage());
 
             }
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember(moduleId));
-            //CourseTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getModules());
-            //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getId()).getTitle()));
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember((memberId)));
         }
-
     }
 
+    @FXML
+    public void onSliderChanged(){
+        int sliderValue = (int) ProgressSlider.getValue();
+
+        System.out.println(sliderValue);
+    }
+
+    //Saves the progress to the database
     @FXML
     public void saveProgress(ActionEvent e){
         System.out.println("hoi");
         System.out.println(memberId);
         progressData.addProgressForWebcast((int)ProgressSlider.getValue(), memberId, contentId, webcastId);
-
-        //CourseMembers.refresh();
     }
 
-
-
-    @FXML
-    private void onSliderChanged(){
-        int sliderValue = (int) ProgressSlider.getValue();
-        System.out.println(sliderValue);
-    }
-
+    //Returns the user to the previous page
     @FXML
     private void onReturnClick() throws IOException {
         this.sceneController.sceneSwitcher("progress/progress-view.fxml", btn_return);

@@ -34,8 +34,8 @@ public class Validation {
     }
 
     public boolean ZipcodeValidation(String zipcode){
-        Pattern pattern = Pattern.compile("/^[1-9][0-9]{3} [A-Z]{2}$/i", Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("^[1-9][0-9]{3} [A-Z]{2}$");
         Matcher matcher = pattern.matcher(zipcode);
-        return matcher.find();
+        return matcher.matches();
     }
 }

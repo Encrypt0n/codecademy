@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/*
+    The class ProgressCourseController is in connection with progresscourse-view.fxml, this class is responsible for the interactions with the user
+ */
 public class ProgressCourseController implements Initializable {
     @FXML
     Slider ProgressSlider;
@@ -55,6 +58,7 @@ public class ProgressCourseController implements Initializable {
     Progress progress;
     int id;
 
+    //loads after the constructor but before the page is loaded and fills the table
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -62,72 +66,50 @@ public class ProgressCourseController implements Initializable {
 
     }
 
+    //Fills the table with course members
     private void fillMemberList(){
         MemberColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseMemberData.getCourseMember(data.getValue().getId()).getName()));
         MemberTable.getItems().setAll(courseMemberData.getCourseMembers());
         MemberTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getCourses());
     }
 
+    //Gets the selected member and fills the the courses table
     private void getCourses() {
         if(MemberTable.isPressed()){
             memberId = MemberTable.getSelectionModel().getSelectedItem().getId();
             this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getId()).getTitle()));
             CourseTable.getItems().setAll(courseData.getCoursesPerMember(memberId));
             CourseTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getModules());
-            //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getId()).getTitle()));
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember((memberId)));
         }
 
     }
 
+    //Gets the selected course and fills the module table
     private void getModules() {
         if(CourseTable.isPressed()){
             courseId = CourseTable.getSelectionModel().getSelectedItem().getId();
             this.ModuleColumn.setCellValueFactory(data -> new SimpleStringProperty(this.moduleData.getModule(data.getValue().getId()).getTitle()));
-            //System.out.println(moduleData.getModulesPerCourse(courseId));
             ModuleTable.getItems().setAll(moduleData.getModulesPerCourse(courseId));
             ModuleTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getProgress());
-
-
-            /*int courseId = CourseTable.getSelectionModel().getSelectedItem().getId();
-            this.ModuleColumn.setCellValueFactory(data -> new SimpleStringProperty(this.moduleData.getModule(data.getValue().).getTitle()));
-            //this.ModuleColumn.setCellValueFactory(data -> new SimpleStringProperty(this.moduleData.getModule(data.getValue().getId()).getTitle()));
-            ModuleTable.getItems().setAll((Module) progressData.getModules(courseId));*/
         }
 
     }
 
+    //Gets the selected module and (if the progress isn't null) fills the progress bar
     private void getProgress() {
         if(ModuleTable.isPressed()){
             moduleId = ModuleTable.getSelectionModel().getSelectedItem().getId();
-            //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.progressData.getProgress(data.getValue().getId()).toString());
-            
+            contentId = ModuleTable.getSelectionModel().getSelectedItem().getContentID();
             progress = this.progressData.getProgressForModule(moduleId, memberId);
-
-
             if(progress != null) {
-                //System.out.println(progress.getPercentage());
                 id = progress.getId();
                 contentId = progress.getContentID();
                 ProgressSlider.adjustValue(progress.getPercentage());
-
             }
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember(moduleId));
-            //CourseTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getModules());
-            //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getId()).getTitle()));
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember((memberId)));
         }
 
     }
 
-    @FXML
-    public void saveProgress(ActionEvent e){
-        System.out.println("hoi");
-        System.out.println(memberId);
-        progressData.addProgressForModule((int)ProgressSlider.getValue(), memberId, contentId, moduleId);
-        progressData.addCertitifcate(courseId, memberId, moduleId);
-        //CourseMembers.refresh();
-    }
 
     @FXML
     public void onSliderChanged(){
@@ -136,6 +118,15 @@ public class ProgressCourseController implements Initializable {
         System.out.println(sliderValue);
     }
 
+
+    //Saves the progress to the database
+    @FXML
+    public void saveProgress(ActionEvent e){
+        progressData.addProgressForModule((int)ProgressSlider.getValue(), memberId, contentId, moduleId);
+        progressData.addCertificate(courseId, memberId, moduleId);
+    }
+
+    //Returns the user to the previous page
     @FXML
     private void onReturnClick() throws IOException {
         sceneController.sceneSwitcher("progress/progress-view.fxml", btn_return);

@@ -7,11 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    This class handles the table "Certificaten" inside the database
+ */
 public class CertificateData {
     DatabaseConnection connection = new DatabaseConnection();
 
     Connection conn = connection.makeConnection();
 
+    //Gets all the certificates from the database
     public List<String> getCertificates(int id){
         ArrayList<String> certificates = new ArrayList<>();
         String certificateName;
@@ -42,6 +46,7 @@ public class CertificateData {
         return null;
     }
 
+    //Gets the amount of certificates inside the database
     public int getAmountCertificate(int id) {
         int amount = 0;
         ResultSet rs;

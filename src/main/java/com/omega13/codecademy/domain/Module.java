@@ -6,18 +6,22 @@ public class Module {
 
     private int id;
     private String title;
+    private int contentID;
 
 
-
-    public Module(int id, String title) {
+    public Module(int id, String title, int contentID) {
         this.id = id;
         this.title = title;
-
+        this.contentID = contentID;
 
     }
 
     public int getId() {
         return id;
+    }
+
+    public int getContentID(){
+        return this.contentID;
     }
 
     public String getTitle() {
