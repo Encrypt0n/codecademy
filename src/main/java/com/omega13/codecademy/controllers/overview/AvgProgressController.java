@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -38,6 +39,8 @@ public class AvgProgressController implements Initializable {
     TableView<com.omega13.codecademy.domain.Module> ModuleTable;
     @FXML
     TableColumn<com.omega13.codecademy.domain.Module, String> ModuleColumn;
+    @FXML
+    Label avgPercentage;
 
     int courseId;
     int moduleId;
@@ -82,22 +85,17 @@ public class AvgProgressController implements Initializable {
 
         if(ModuleTable.isPressed()){
             moduleId = ModuleTable.getSelectionModel().getSelectedItem().getId();
+            System.out.println(moduleId);
             //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.progressData.getProgress(data.getValue().getId()).toString());
 
             avarage = this.progressData.getAvarageForModule(moduleId);
 
 
             if(avarage != 0) {
-                System.out.println(avarage);
-                //id = progress.getId();
-                //contentId = progress.getContentID();
-                //ProgressSlider.adjustValue(avarage);
-
+                avgPercentage.setText("Deze module is gemiddled " + avarage + "% afgerond");
+            }else{
+                avgPercentage.setText("Niemand is aan deze module begonnen");
             }
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember(moduleId));
-            //CourseTable.getSelectionModel().selectedIndexProperty().addListener((num) -> getModules());
-            //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.courseData.getCourse(data.getValue().getId()).getTitle()));
-            //CourseTable.getItems().setAll(courseData.getCoursesPerMember((memberId)));
         }
     }
 

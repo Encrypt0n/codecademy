@@ -291,8 +291,8 @@ public class ProgressData {
                 "INNER JOIN Content ON Voortgang.ContentID = Content.ID " +
                 "INNER JOIN Cursist ON Voortgang.CursistID = Cursist.ID " +
                 "INNER JOIN Module ON Content.ModuleID = Module.ID " +
-                "INNER JOIN Blabla ON Module.ID = Blabla.ModuleID " +
-                "INNER JOIN Cursus ON Blabla.CursusID = Cursus.ID " +
+                "INNER JOIN CursusModule ON Module.ID = CursusModule.ModuleID " +
+                "INNER JOIN Cursus ON CursusModule.CursusID = Cursus.ID " +
 
                 "AND Module.ID = " + ModuleID + "AND Cursus.ID = " + CursusID + "AND Cursist.ID = " + CursistID + "AND Voortgang.Percentage = " + 100;
 
@@ -309,8 +309,8 @@ public class ProgressData {
 
 
         String query11 =  "SELECT COUNT(Module.ID) FROM Cursus " +
-                "INNER JOIN Blabla ON Cursus.ID = Blabla.CursusID " +
-                "INNER JOIN Module ON Blabla.ModuleID = Module.ID " +
+                "INNER JOIN CursusModule ON Cursus.ID = CursusModule.CursusID " +
+                "INNER JOIN Module ON CursusModule.ModuleID = Module.ID " +
                 "AND Cursus.ID = " + CursusID;
 
         PreparedStatement preparedStmt11 = conn.prepareStatement(query11);

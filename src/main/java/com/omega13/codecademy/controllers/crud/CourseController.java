@@ -7,6 +7,7 @@ import com.omega13.codecademy.domain.Course;
 import com.omega13.codecademy.domain.CourseMember;
 import com.omega13.codecademy.domain.Enums.Level;
 import com.omega13.codecademy.domain.Module;
+import com.omega13.codecademy.validation.Validation;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,7 +67,6 @@ public class CourseController implements Initializable {
     private CourseData courseData = new CourseData();
     private ModuleData moduleData = new ModuleData();
     private SceneController sceneController = new SceneController();
-
     ArrayList<Module> modules = new ArrayList<>();
 
     @Override
