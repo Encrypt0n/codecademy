@@ -76,7 +76,7 @@ public class ModuleData {
 
         ResultSet rs;
         try {
-            String query = " select Module.ID, Module.Titel from Module LEFT JOIN Blabla ON Module.ID = Blabla.ModuleID WHERE Blabla.ModuleID IS NULL";
+            String query = " select Module.ID, Module.Titel from Module LEFT JOIN CursusModule ON Module.ID = CursusModule.ModuleID WHERE CursusModule.ModuleID IS NULL";
 
             // create the mysql insert preparedstatement
             PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -114,8 +114,8 @@ public class ModuleData {
         try{
             String query = "" +
                     "SELECT Module.ID, Module.Titel FROM Module " +
-                    "INNER JOIN Blabla ON Module.ID = Blabla.ModuleID " +
-                    "INNER JOIN Cursus ON Blabla.CursusID = Cursus.ID " +
+                    "INNER JOIN CursusModule ON Module.ID = CursusModule.ModuleID " +
+                    "INNER JOIN Cursus ON CursusModule.CursusID = Cursus.ID " +
                     "AND Cursus.ID = " + courseId;
 
 

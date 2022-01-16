@@ -5,6 +5,7 @@ import com.omega13.codecademy.Home;
 import com.omega13.codecademy.controllers.SceneController;
 import com.omega13.codecademy.database.CourseMemberData;
 import com.omega13.codecademy.domain.CourseMember;
+import com.omega13.codecademy.validation.Validation;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,10 +68,12 @@ public class CourseMemberController implements Initializable {
 
     private CourseMemberData memberData;
     private SceneController sceneController;
+    private Validation validation;
 
     public CourseMemberController(){
         this.memberData = new CourseMemberData();
         this.sceneController = new SceneController();
+        this.validation = new Validation();
     }
 
     @Override
@@ -121,8 +124,9 @@ public class CourseMemberController implements Initializable {
 
     @FXML
     public void addCourseMember(ActionEvent e){
+        if(!this.validation.EmailValidation(newEmail.getText()) || !this.validation.DateValidation(newBirthday.getValue())) return;
         memberData.addCourseMember(newName.getText(), newEmail.getText(), Date.valueOf(newBirthday.getValue()), true, newAddress.getText(), newCity.getText(), newCountry.getText());
-        CourseMembers.refresh();
+        CourseMembers.getItems().setAll(memberData.getCourseMembers());
     }
 
     @FXML

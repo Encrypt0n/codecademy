@@ -87,7 +87,6 @@ public class CourseProgressController implements Initializable {
         if(ModuleTable.isPressed()){
 
             moduleId = ModuleTable.getSelectionModel().getSelectedItem().getId();
-            //this.CourseColumn.setCellValueFactory(data -> new SimpleStringProperty(this.progressData.getProgress(data.getValue().getId()).toString());
 
             System.out.println(moduleId );
             System.out.println(memberId);

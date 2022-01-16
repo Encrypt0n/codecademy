@@ -183,7 +183,7 @@ public class CourseData {
 
             for(Module module : modules) {
 
-                String query2 = " insert into Blabla (ModuleID, CursusID, Volgnummer)"
+                String query2 = " insert into CursusModule (ModuleID, CursusID, Volgnummer)"
                         + " values (?, ?, ?)";
 
 
@@ -252,7 +252,7 @@ public class CourseData {
             preparedStmt.executeUpdate();
 
 
-            String queryDelete = " delete from Blabla WHERE CursusID =?";
+            String queryDelete = " delete from CursusModule WHERE CursusID =?";
 
             // create the mysql insert preparedstatement
             PreparedStatement preparedStmtDelete = conn.prepareStatement(queryDelete);
@@ -263,7 +263,7 @@ public class CourseData {
             preparedStmtDelete.execute();
 
             for (Module module: modules) {
-                String query2 = " insert into Blabla (ModuleID, CursusID, Volgnummer)"
+                String query2 = " insert into CursusModule (ModuleID, CursusID, Volgnummer)"
                         + " values (?, ?, ?)";
 
                 // create the mysql insert preparedstatement
