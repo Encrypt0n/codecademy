@@ -127,9 +127,16 @@ public class CourseMemberController implements Initializable {
     //Adds course member to databse
     @FXML
     public void addCourseMember(ActionEvent e){
-        if(!this.validation.EmailValidation(newEmail.getText()) || !this.validation.DateValidation(newBirthday.getValue())) return;
-        memberData.addCourseMember(newName.getText(), newEmail.getText(), Date.valueOf(newBirthday.getValue()), true, newAddress.getText(), newCity.getText(), newCountry.getText());
+        if(!this.validation.EmailValidation(newEmail.getText()) || !this.validation.DateValidation(newBirthday.getValue()) || !getZipcode()) return;
+        memberData.addCourseMember(newName.getText(), newEmail.getText(), Date.valueOf(newBirthday.getValue()), gender, newAddress.getText(), newCity.getText(), newCountry.getText());
         CourseMembers.getItems().setAll(memberData.getCourseMembers());
+
+    }
+
+    private boolean getZipcode(){
+        int addressLength = newAddress.getText().length();
+        String zipcode = newAddress.getText().substring(addressLength - 7, addressLength);
+        return validation.ZipcodeValidation(zipcode);
     }
 
     //Removes course member from database
@@ -142,8 +149,8 @@ public class CourseMemberController implements Initializable {
     //Update course member from database
     public void updateCourseMember(ActionEvent e){
         //System.out.println(CourseMember.getSelectionModel().getSelectedItem().getName());
-        memberData.updateCourseMember(id, newName.getText(), newEmail.getText(), java.sql.Date.valueOf(newBirthday.getValue()), true, newAddress.getText(), newCity.getText(), newCountry.getText());
-        CourseMembers.refresh();
+        memberData.updateCourseMember(id, newName.getText(), newEmail.getText(), java.sql.Date.valueOf(newBirthday.getValue()), gender, newAddress.getText(), newCity.getText(), newCountry.getText());
+        CourseMembers.getItems().setAll(memberData.getCourseMembers());
     }
 
     //Return uses to previous page

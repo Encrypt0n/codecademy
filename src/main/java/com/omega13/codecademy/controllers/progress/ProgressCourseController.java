@@ -99,7 +99,7 @@ public class ProgressCourseController implements Initializable {
     private void getProgress() {
         if(ModuleTable.isPressed()){
             moduleId = ModuleTable.getSelectionModel().getSelectedItem().getId();
-            
+            contentId = ModuleTable.getSelectionModel().getSelectedItem().getContentID();
             progress = this.progressData.getProgressForModule(moduleId, memberId);
             if(progress != null) {
                 id = progress.getId();
@@ -109,6 +109,15 @@ public class ProgressCourseController implements Initializable {
         }
 
     }
+
+
+    @FXML
+    public void onSliderChanged(){
+        int sliderValue = (int) ProgressSlider.getValue();
+
+        System.out.println(sliderValue);
+    }
+
 
     //Saves the progress to the database
     @FXML

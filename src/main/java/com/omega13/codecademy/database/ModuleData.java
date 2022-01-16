@@ -23,6 +23,7 @@ public class ModuleData {
         ArrayList<Module> Modules = new ArrayList<>();
         int id;
         String title;
+        int contentID = 0;
 
 
         ResultSet rs;
@@ -38,7 +39,7 @@ public class ModuleData {
                 id = rs.getInt(1);
                 title = rs.getString(2);
 
-                Modules.add(new Module(id, title));
+                Modules.add(new Module(id, title, contentID));
             }
 
             rs.close();
@@ -57,7 +58,7 @@ public class ModuleData {
         ArrayList<Module> Modules = new ArrayList<>();
         int id;
         String title;
-
+        int contentID = 0;
 
         ResultSet rs;
         try {
@@ -72,7 +73,7 @@ public class ModuleData {
                 id = rs.getInt(1);
                 title = rs.getString(2);
 
-                Modules.add(new Module(id, title));
+                Modules.add(new Module(id, title, contentID));
             }
 
             rs.close();
@@ -92,14 +93,11 @@ public class ModuleData {
 
         int id;
         String title;
+        int contentID;
         ResultSet rs;
 
         try{
-            String query = "" +
-                    "SELECT Module.ID, Module.Titel FROM Module " +
-                    "INNER JOIN CursusModule ON Module.ID = CursusModule.ModuleID " +
-                    "INNER JOIN Cursus ON CursusModule.CursusID = Cursus.ID " +
-                    "AND Cursus.ID = " + courseId;
+            String query = "SELECT Module.ID, Module.Titel, Content.ID FROM Module INNER JOIN CursusModule ON Module.ID = CursusModule.ModuleID INNER JOIN Cursus ON CursusModule.CursusID = Cursus.ID AND Cursus.ID = " + courseId;
 
             PreparedStatement preparedStmt = conn.prepareStatement(query);
             rs = preparedStmt.executeQuery();
@@ -107,8 +105,9 @@ public class ModuleData {
             while(rs.next()){
                 id = rs.getInt(1);
                 title = rs.getString(2);
+                contentID = rs.getInt(3);
 
-                Modules.add(new com.omega13.codecademy.domain.Module(id, title));
+                Modules.add(new com.omega13.codecademy.domain.Module(id, title, contentID));
             }
 
             rs.close();
@@ -126,6 +125,7 @@ public class ModuleData {
         com.omega13.codecademy.domain.Module module = null;
         int id;
         String title;
+        int contentID = 0;
 
         ResultSet rs;
 
@@ -141,7 +141,7 @@ public class ModuleData {
                 id = rs.getInt(1);
                 title = rs.getString(2);
 
-                module = new com.omega13.codecademy.domain.Module(id, title);
+                module = new com.omega13.codecademy.domain.Module(id, title, contentID);
             }
 
             rs.close();

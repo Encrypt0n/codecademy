@@ -51,45 +51,6 @@ public class WebcastData {
         } finally {
 
         }
-
-
-
-    }
-
-    //Gets all the webcast from the database that belong to a course member
-    public List<Webcast> getWebcastPerMember(int memberId){
-        ArrayList<Webcast> Webcasts = new ArrayList<>();
-
-        int id;
-        String title;
-        ResultSet rs;
-
-        try{
-            String query = "" +
-                    "SELECT Webcast.ID, Webcast.Titel FROM Webcast " +
-                    "INNER JOIN Content ON Webcast.ID = Content.ModuleID " +
-                    "INNER JOIN Voortgang ON Content.ID = Voortgang.ContentID " +
-                    "AND Voortgang.CursistID = " + memberId;
-
-
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            rs = preparedStmt.executeQuery();
-
-            while(rs.next()){
-                id = rs.getInt(1);
-                title = rs.getString(2);
-
-                Webcasts.add(new Webcast(id, title));
-            }
-
-            rs.close();
-            preparedStmt.close();
-            return Webcasts;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     //Gets the webcast by webcastId

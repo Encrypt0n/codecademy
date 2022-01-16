@@ -103,6 +103,13 @@ public class ProgressWebcastController implements Initializable {
         }
     }
 
+    @FXML
+    public void onSliderChanged(){
+        int sliderValue = (int) ProgressSlider.getValue();
+
+        System.out.println(sliderValue);
+    }
+
     //Saves the progress to the database
     @FXML
     public void saveProgress(ActionEvent e){

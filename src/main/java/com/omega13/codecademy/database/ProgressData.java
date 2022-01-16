@@ -209,7 +209,6 @@ public class ProgressData {
 
                 String query10 =  "SELECT Content.ID FROM Content " +
                         "INNER JOIN Webcast ON Content.WebcastID = Webcast.ID " +
-
                         "AND Webcast.ID = " + WebcastID;
                 PreparedStatement preparedStmt10 = conn.prepareStatement(query10);
                 rs = preparedStmt10.executeQuery();
@@ -260,7 +259,7 @@ public class ProgressData {
                 "INNER JOIN CursusModule ON Module.ID = CursusModule.ModuleID " +
                 "INNER JOIN Cursus ON CursusModule.CursusID = Cursus.ID " +
 
-                "AND Module.ID = " + ModuleID + "AND Cursus.ID = " + CursusID + "AND Cursist.ID = " + CursistID + "AND Voortgang.Percentage = " + 100;
+                "AND Cursus.ID = " + CursusID + "AND Cursist.ID = " + CursistID + "AND Voortgang.Percentage = " + 100;
 
         PreparedStatement preparedStmt10 = conn.prepareStatement(query10);
 
