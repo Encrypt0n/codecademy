@@ -17,12 +17,9 @@ public class Home extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Home.class.getResource("home-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        stage.setTitle("Eren Aygun 2189883 | Bas van Turnhout 2184264 | Rogier van der Gaag 2181162");
         stage.setScene(scene);
         stage.show();
     }
 
-    public void switchScene(){
-        System.out.println("Hallo!");
-    }
 }

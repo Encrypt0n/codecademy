@@ -10,12 +10,22 @@ public class Progress {
     DatabaseConnection connection = new DatabaseConnection();
     Connection conn = connection.makeConnection();
 
-    public Progress() {
+    private int id;
+    private int Percentage;
+    private int CursistID;
+    private int ContentID;
 
-        
+    public Progress(int id, int Percentage, int CursistID, int ContentID) {
+
+        this.id = id;
+        this.Percentage = Percentage;
+        this.CursistID = CursistID;
+        this.ContentID = ContentID;
       
 
     }
+
+
 
     public void addProgress(int Pertentage, int CursistID, int ContentID) {
 
@@ -55,6 +65,22 @@ public class Progress {
             System.out.println(ex.getMessage());
             }
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getPercentage() {
+        return Percentage;
+    }
+
+    public int getCursistID() {
+        return CursistID;
+    }
+
+    public int getContentID() {
+        return ContentID;
     }
     
 }

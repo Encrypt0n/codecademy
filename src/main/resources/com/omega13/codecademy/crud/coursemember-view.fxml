@@ -12,16 +12,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.omega13.codecademy.controllers.CourseMemberController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.omega13.codecademy.controllers.crud.CourseMemberController">
    <children>
       <BorderPane layoutX="-2.0" layoutY="-1.0" prefHeight="408.0" prefWidth="652.0">
-         <top>
-            <Label text="Cursisten" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Label>
-         </top>
          <center>
             <TableView fx:id="CourseMembers" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="652.0" BorderPane.alignment="TOP_CENTER">
               <columns>
@@ -43,17 +36,29 @@
                         <Button alignment="TOP_RIGHT" layoutX="292.0" layoutY="152.0" mnemonicParsing="false" onAction="#addCourseMember" text="Add user" />
                   <TextField fx:id="newName" layoutX="71.0" layoutY="25.0" promptText="Naam" />
                   <TextField fx:id="newEmail" layoutX="71.0" layoutY="75.0" promptText="Email" />
-                  <TextField fx:id="newAddress" layoutX="252.0" layoutY="25.0" promptText="Adres" />
-                  <TextField fx:id="newCity" layoutX="251.0" layoutY="75.0" promptText="Woonplaats" />
-                  <TextField fx:id="newCountry" layoutX="432.0" layoutY="25.0" promptText="Land" />
-                  <DatePicker fx:id="newBirthday" layoutX="420.0" layoutY="75.0" />
-                  <RadioButton layoutX="220.0" layoutY="122.0" mnemonicParsing="false" text="Man" />
-                  <RadioButton layoutX="366.0" layoutY="122.0" mnemonicParsing="false" text="Vrouw" />
+                  <TextField fx:id="newAddress" layoutX="252.0" layoutY="25.0" prefHeight="25.0" prefWidth="176.0" promptText="Straat, huisnummer, postcode" />
+                  <TextField fx:id="newCity" layoutX="251.0" layoutY="75.0" prefHeight="25.0" prefWidth="177.0" promptText="Woonplaats" />
+                  <TextField fx:id="newCountry" layoutX="445.0" layoutY="25.0" prefHeight="25.0" prefWidth="174.0" promptText="Land" />
+                  <DatePicker fx:id="newBirthday" layoutX="445.0" layoutY="75.0" />
+                  <RadioButton fx:id="Male" layoutX="220.0" layoutY="122.0" mnemonicParsing="false" text="Man" />
+                  <RadioButton fx:id="Female" layoutX="366.0" layoutY="122.0" mnemonicParsing="false" text="Vrouw" />
                   <Button alignment="TOP_RIGHT" layoutX="179.0" layoutY="152.0" mnemonicParsing="false" onAction="#updateCourseMember" text="Update user" />
                   <Button alignment="TOP_RIGHT" layoutX="392.0" layoutY="152.0" mnemonicParsing="false" onAction="#deleteCourseMember" text="Delete user" />
                </children>
             </Pane>
          </bottom>
+         <top>
+            <Pane prefHeight="46.0" prefWidth="652.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="277.0" layoutY="6.0" text="Cursisten">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btn_return" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#returnHome" text="Terug" />
+               </children>
+            </Pane>
+         </top>
       </BorderPane>
    </children>
 </AnchorPane>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.omega13.codecademy.controllers.crud.EnrollmentController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="227.0" text="Inschrijvingen">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TableView fx:id="Enrollments" layoutY="46.0" prefHeight="252.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="Name" prefWidth="150.0" text="Naam" />
+                  <TableColumn fx:id="Course" prefWidth="150.0" text="Cursus" />
+                  <TableColumn fx:id="RegistrationDate" prefWidth="150.0" text="Inschrijfdatum" />
+                  <TableColumn fx:id="Active" prefWidth="150.0" text="Actief" />
+              </columns>
+            </TableView>
+            <ComboBox fx:id="CourseMemberDropdown" layoutX="82.0" layoutY="312.0" prefWidth="150.0" promptText="Cursist" />
+            <ComboBox fx:id="CourseDropdown" layoutX="245.0" layoutY="312.0" prefWidth="150.0" promptText="Cursus" />
+            <Button layoutX="414.0" layoutY="312.0" mnemonicParsing="false" onAction="#enrollCourse" prefHeight="25.0" prefWidth="104.0" text="Inschrijven" />
+            <Button layoutX="266.0" layoutY="355.0" mnemonicParsing="false" onAction="#deleteEnrollment" prefHeight="25.0" prefWidth="104.0" text="Verwijderen" />
+            <Button fx:id="btn_return" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnHome" text="Terug" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
